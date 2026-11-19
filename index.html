@@ -67,7 +67,7 @@
             cursor: pointer;
             transition: transform 4s cubic-bezier(0.645, 0.045, 0.355, 1);
             transform-style: preserve-3d;
-            background-image: url('cancello.jpg'); /* Assicurati che il nome sia corretto */
+            background-image: url('cancello.jpg');
             background-size: 200% 100%;
             background-repeat: no-repeat;
             box-shadow: inset 0 0 50px rgba(107, 79, 31, 0.15);
@@ -94,14 +94,8 @@
             box-shadow: 1px 0 5px rgba(0,0,0,0.1);
         }
 
-        #gate-container.open .left { 
-            transform: rotateY(-115deg); 
-            box-shadow: -20px 0 50px rgba(0,0,0,0.3);
-        }
-        #gate-container.open .right { 
-            transform: rotateY(115deg); 
-            box-shadow: 20px 0 50px rgba(0,0,0,0.3);
-        }
+        #gate-container.open .left { transform: rotateY(-115deg); box-shadow: -20px 0 50px rgba(0,0,0,0.3); }
+        #gate-container.open .right { transform: rotateY(115deg); box-shadow: 20px 0 50px rgba(0,0,0,0.3); }
         #gate-container.open { pointer-events: none; }
 
         #hint {
@@ -160,16 +154,12 @@
             border: 1px solid var(--gold);
             border-radius: 8px;
             padding: clamp(2.2rem, 7vw, 4rem) clamp(1.5rem, 6vw, 3.5rem);
-            box-shadow:
-                0 20px 60px rgba(74, 58, 42, 0.14),
-                0 4px 12px rgba(74, 58, 42, 0.07),
-                inset 0 0 60px rgba(201, 168, 106, 0.08);
+            box-shadow: 0 20px 60px rgba(74, 58, 42, 0.14), 0 4px 12px rgba(74, 58, 42, 0.07), inset 0 0 60px rgba(201, 168, 106, 0.08);
             text-align: center;
             overflow: hidden;
         }
 
-        .parchment::before,
-        .parchment::after {
+        .parchment::before, .parchment::after {
             content: '❀';
             position: absolute;
             font-size: clamp(1.8rem, 5vw, 2.8rem);
@@ -180,13 +170,7 @@
         .parchment::before { top: 1.2rem; left: 1.4rem; }
         .parchment::after { bottom: 1.2rem; right: 1.4rem; transform: rotate(180deg); }
 
-        .scroll-corner {
-            position: absolute;
-            font-size: clamp(1.4rem, 4vw, 2rem);
-            color: var(--gold);
-            opacity: 0.7;
-            line-height: 1;
-        }
+        .scroll-corner { position: absolute; font-size: clamp(1.4rem, 4vw, 2rem); color: var(--gold); opacity: 0.7; line-height: 1; }
         .scroll-corner.tl { top: 1.4rem; right: 1.6rem; }
         .scroll-corner.br { bottom: 1.4rem; left: 1.6rem; }
 
@@ -209,13 +193,7 @@
             text-shadow: 0 2px 12px rgba(138, 106, 47, 0.25);
         }
 
-        .invite-amp {
-            font-family: 'Great Vibes', cursive;
-            font-size: clamp(1.6rem, 5.5vw, 2.2rem);
-            color: var(--rose);
-            display: block;
-            margin: 0.2rem 0;
-        }
+        .invite-amp { font-family: 'Great Vibes', cursive; font-size: clamp(1.6rem, 5.5vw, 2.2rem); color: var(--rose); display: block; margin: 0.2rem 0; }
 
         .ornament-divider {
             display: flex;
@@ -225,17 +203,14 @@
             margin: 1.5rem 0;
             color: var(--gold);
         }
-        .ornament-divider::before,
-        .ornament-divider::after {
+        .ornament-divider::before, .ornament-divider::after {
             content: '';
             flex: 1;
             max-width: 90px;
             height: 1px;
             background: linear-gradient(90deg, transparent, var(--gold), transparent);
         }
-        .ornament-divider span {
-            font-size: clamp(1.1rem, 3.2vw, 1.4rem);
-        }
+        .ornament-divider span { font-size: clamp(1.1rem, 3.2vw, 1.4rem); }
 
         .invite-text {
             font-family: 'Cormorant Garamond', serif;
@@ -248,21 +223,9 @@
         }
 
         .invite-text p { margin: 0 0 1.1rem; }
-        .invite-text .em {
-            font-family: 'Great Vibes', cursive;
-            font-size: 1.4em;
-            color: var(--gold-deep);
-            display: inline-block;
-            line-height: 1;
-        }
+        .invite-text .em { font-family: 'Great Vibes', cursive; font-size: 1.4em; color: var(--gold-deep); display: inline-block; line-height: 1; }
 
-        .invite-signature {
-            font-family: 'Great Vibes', cursive;
-            font-size: clamp(1.9rem, 6.5vw, 2.7rem);
-            color: var(--gold-deep);
-            margin-top: 1.8rem;
-            line-height: 1.2;
-        }
+        .invite-signature { font-family: 'Great Vibes', cursive; font-size: clamp(1.9rem, 6.5vw, 2.7rem); color: var(--gold-deep); margin-top: 1.8rem; line-height: 1.2; }
 
         /* ===== SEZIONE 2: DATA DA GRATTARE ===== */
         .scratch-section {
@@ -300,19 +263,12 @@
             aspect-ratio: 1 / 1;
             margin: 0 auto 1.8rem;
             filter: drop-shadow(0 12px 30px rgba(138, 106, 47, 0.28));
-            /* Permette lo scroll verticale se si inizia il tocco sul cuore */
             touch-action: pan-y; 
         }
 
-        .heart-shape {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-        }
-        .heart-shape .fill {
-            fill: url(#goldGradient);
-        }
+        .heart-shape { position: absolute; inset: 0; width: 100%; height: 100%; }
+        .heart-shape .fill { fill: url(#goldGradient); }
+        
         .scratch-canvas {
             position: absolute;
             inset: 0;
@@ -320,7 +276,6 @@
             height: 100%;
             cursor: pointer;
             z-index: 3;
-            /* Fondamentale: permette lo scroll verticale della pagina */
             touch-action: pan-y; 
             -webkit-user-select: none;
             user-select: none;
@@ -338,18 +293,8 @@
             text-shadow: 0 2px 6px rgba(74, 58, 42, 0.6);
             transition: opacity 0.4s;
         }
-        .scratch-label .icon {
-            font-size: clamp(1.8rem, 5.5vw, 2.4rem);
-            line-height: 1;
-            margin-bottom: 0.35rem;
-        }
-        .scratch-label .txt {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(0.8rem, 2.6vw, 0.95rem);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            font-weight: 700;
-        }
+        .scratch-label .icon { font-size: clamp(1.8rem, 5.5vw, 2.4rem); line-height: 1; margin-bottom: 0.35rem; }
+        .scratch-label .txt { font-family: 'Cormorant Garamond', serif; font-size: clamp(0.8rem, 2.6vw, 0.95rem); letter-spacing: 3px; text-transform: uppercase; font-weight: 700; }
 
         .reveal-date {
             position: absolute;
@@ -361,34 +306,10 @@
             z-index: 1;
             color: var(--gold-deep);
         }
-        .reveal-date .day {
-            font-family: 'Great Vibes', cursive;
-            font-size: clamp(3.4rem, 15vw, 5.5rem);
-            line-height: 1;
-            color: var(--gold-deep);
-        }
-        .reveal-date .month {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(1.15rem, 4vw, 1.5rem);
-            font-weight: 600;
-            letter-spacing: 6px;
-            text-transform: uppercase;
-            color: var(--text-dark);
-            margin-top: 0.35rem;
-        }
-        .reveal-date .year {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(1rem, 3.2vw, 1.2rem);
-            font-weight: 600;
-            letter-spacing: 4px;
-            color: var(--text-soft);
-            margin-top: 0.25rem;
-        }
-        .reveal-date .heart-mini {
-            color: var(--rose);
-            font-size: 1.4rem;
-            margin-top: 0.5rem;
-        }
+        .reveal-date .day { font-family: 'Great Vibes', cursive; font-size: clamp(3.4rem, 15vw, 5.5rem); line-height: 1; color: var(--gold-deep); }
+        .reveal-date .month { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.15rem, 4vw, 1.5rem); font-weight: 600; letter-spacing: 6px; text-transform: uppercase; color: var(--text-dark); margin-top: 0.35rem; }
+        .reveal-date .year { font-family: 'Cormorant Garamond', serif; font-size: clamp(1rem, 3.2vw, 1.2rem); font-weight: 600; letter-spacing: 4px; color: var(--text-soft); margin-top: 0.25rem; }
+        .reveal-date .heart-mini { color: var(--rose); font-size: 1.4rem; margin-top: 0.5rem; }
 
         .countdown {
             display: flex;
@@ -405,43 +326,18 @@
             border-radius: 8px;
             box-shadow: 0 6px 18px rgba(74, 58, 42, 0.1), inset 0 0 20px rgba(201, 168, 106, 0.06);
         }
-        .cd-box .num {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(1.6rem, 6vw, 2.2rem);
-            font-weight: 700;
-            color: var(--gold-deep);
-            line-height: 1;
-            display: block;
-        }
-        .cd-box .lbl {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(0.65rem, 2.2vw, 0.78rem);
-            font-weight: 600;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--text-soft);
-            margin-top: 0.4rem;
-            display: block;
-        }
+        .cd-box .num { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.6rem, 6vw, 2.2rem); font-weight: 700; color: var(--gold-deep); line-height: 1; display: block; }
+        .cd-box .lbl { font-family: 'Cormorant Garamond', serif; font-size: clamp(0.65rem, 2.2vw, 0.78rem); font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--text-soft); margin-top: 0.4rem; display: block; }
+        .cd-caption { font-family: 'Cormorant Garamond', serif; font-size: clamp(0.9rem, 2.8vw, 1.05rem); font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--text-soft); margin: 1.6rem 0 0; }
 
-        .cd-caption {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(0.9rem, 2.8vw, 1.05rem);
-            font-weight: 600;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--text-soft);
-            margin: 1.6rem 0 0;
-        }
-
-        /* ===== SEZIONE 3: LOCATION ===== */
+        /* ===== SEZIONE 3: LOCATION & TIMELINE ===== */
         .location-section {
             min-height: 100dvh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 3rem 1rem;
+            padding: 4rem 1rem;
             text-align: center;
             position: relative;
         }
@@ -463,25 +359,11 @@
             border-radius: 8px;
             margin-bottom: 1.5rem;
             border: 1px solid var(--gold-light);
-            /* Se l'immagine da Google non dovesse caricare, questo colore di sfondo farà da fallback */
             background-color: var(--pearl); 
         }
 
-        .location-name {
-            font-family: 'Great Vibes', cursive;
-            font-size: clamp(2rem, 7vw, 3rem);
-            color: var(--gold-deep);
-            margin: 0 0 0.5rem;
-        }
-
-        .location-desc {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(1.05rem, 3.5vw, 1.25rem);
-            line-height: 1.7;
-            color: var(--text-dark);
-            margin: 0 auto;
-            font-weight: 500;
-        }
+        .location-name { font-family: 'Great Vibes', cursive; font-size: clamp(2rem, 7vw, 3rem); color: var(--gold-deep); margin: 0 0 0.5rem; }
+        .location-desc { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.05rem, 3.5vw, 1.25rem); line-height: 1.7; color: var(--text-dark); margin: 0 auto; font-weight: 500; }
 
         .map-container {
             width: min(700px, 92vw);
@@ -490,15 +372,124 @@
             border: 2px solid var(--gold);
             box-shadow: 0 10px 30px rgba(74, 58, 42, 0.15);
             background: var(--pearl);
-            /* Altezza del widget mappa */
             height: clamp(250px, 40vh, 350px); 
         }
+        .map-container iframe { width: 100%; height: 100%; border: none; display: block; }
 
-        .map-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: block;
+        /* TIMELINE (Programma) */
+        .timeline-wrapper {
+            width: min(700px, 92vw);
+            margin-top: 3rem;
+            text-align: left;
+            position: relative;
+        }
+        
+        .timeline-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 24px;
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, var(--gold) 10%, var(--gold) 90%, transparent);
+            z-index: 1;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            z-index: 2;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-icon {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 50px;
+            height: 50px;
+            background: var(--cream);
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: var(--gold-deep);
+            box-shadow: 0 4px 10px rgba(201, 168, 106, 0.2);
+            z-index: 3;
+        }
+
+        .timeline-time {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.1rem, 3.5vw, 1.3rem);
+            font-weight: 700;
+            color: var(--gold-deep);
+            margin-bottom: 0.2rem;
+            letter-spacing: 1px;
+        }
+
+        .timeline-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(1.8rem, 5vw, 2.2rem);
+            color: var(--text-dark);
+            margin: 0 0 0.3rem;
+            line-height: 1.1;
+        }
+
+        .timeline-desc {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(0.95rem, 3vw, 1.1rem);
+            color: var(--text-soft);
+            margin: 0;
+            font-weight: 500;
+        }
+
+        /* ===== SEZIONE 4: CHIUSURA INVITO ===== */
+        .closing-section {
+            min-height: 60dvh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 1.5rem 5rem;
+            text-align: center;
+            background: linear-gradient(to bottom, transparent, rgba(230, 211, 163, 0.15));
+            position: relative;
+        }
+
+        .closing-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(2.2rem, 7vw, 3.5rem);
+            color: var(--gold-deep);
+            margin: 0 0 1.5rem;
+            line-height: 1.2;
+        }
+
+        .closing-sub {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.1rem, 3.8vw, 1.3rem);
+            color: var(--text-dark);
+            max-width: 40ch;
+            margin: 0 auto;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .closing-names {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            color: var(--gold);
+            margin-top: 2rem;
+            text-shadow: 0 2px 10px rgba(201, 168, 106, 0.3);
         }
 
         .floral-divider {
@@ -511,8 +502,7 @@
             margin: 1.2rem auto;
             opacity: 0.9;
         }
-        .floral-divider::before,
-        .floral-divider::after {
+        .floral-divider::before, .floral-divider::after {
             content: '';
             width: clamp(30px, 12vw, 70px);
             height: 1px;
@@ -524,6 +514,9 @@
             .parchment { padding: 2.2rem 1.4rem; }
             .parchment::before, .parchment::after { font-size: 1.6rem; }
             .scroll-corner { font-size: 1.3rem; }
+            .timeline-wrapper::before { left: 20px; }
+            .timeline-item { padding-left: 50px; }
+            .timeline-icon { width: 42px; height: 42px; font-size: 1.2rem; }
         }
         @media (max-height: 500px) and (orientation: landscape) {
             .scroll-section { padding: 1rem 0.8rem 3rem; }
@@ -533,7 +526,7 @@
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .gate, #hint, .scroll-down { transition: none; animation: none; }
+            .gate, #hint, .scroll-down, .timeline-item { transition: none; animation: none; opacity: 1; transform: none; }
         }
     </style>
 </head>
@@ -554,11 +547,11 @@
                 <span class="scroll-corner tl">✿</span>
                 <span class="scroll-corner br">✿</span>
 
-                <p class="invite-label">Partecipazione al matrimonio di</p>
+                <p class="invite-label">Insieme ai loro genitori</p>
 
                 <h1 class="invite-names">
                     Marika
-                    <span class="invite-amp">&</span>
+                    <span class="invite-amp">e</span>
                     Angelo
                 </h1>
 
@@ -625,12 +618,11 @@
             </div>
         </section>
 
-        <!-- SEZIONE 3: LOCATION -->
+        <!-- SEZIONE 3: LOCATION & TIMELINE -->
         <section class="location-section" id="location">
             <h2 class="section-title" style="margin-bottom: 2rem;">La Location</h2>
 
             <div class="location-card">
-                <!-- Immagine presa da Google (sostituisci l'URL se preferisci un'altra foto) -->
                 <img class="location-image" 
                      src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
                      alt="Villa Carafa Andria">
@@ -642,17 +634,62 @@
                 </p>
             </div>
 
-            <!-- Widget Google Maps per Villa Carafa Andria -->
+            <!-- Widget Google Maps aggiornato con le coordinate esatte -->
             <div class="map-container">
                 <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3012.343465117336!2d16.28341331533184!3d41.2227639792793!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1339b5e5d5d5d5d5%3A0x5d5d5d5d5d5d5d5d!2sVilla%20Carafa!5e0!3m2!1sit!2sit!4v1610000000000!5m2!1sit!2sit" 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3004.4428451456174!2d16.10274231541342!3d41.17278267928093!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x13383f3e3027d02d%3A0x82f42f15c3759f21!2sVilla%20Carafa%2C%20Contrada%20monte%20carafa%2C%20km%202000%2C%2076123%20Andria%20BT!5e0!3m2!1sit!2sit!4v1680000000000!5m2!1sit!2sit" 
                     allowfullscreen="" 
                     loading="lazy" 
                     referrerpolicy="no-referrer-when-downgrade">
                 </iframe>
             </div>
 
-            <div class="floral-divider"><span>❀</span></div>
+            <!-- TIMELINE DEL GIORNO -->
+            <div class="timeline-wrapper">
+                <h3 class="section-title" style="text-align: center; margin-top: 3rem; font-size: clamp(2rem, 7vw, 3rem);">Il Programma</h3>
+                <div class="ornament-divider" style="margin-bottom: 3rem;"><span>❦</span></div>
+
+                <div class="timeline-item">
+                    <div class="timeline-icon">⛪</div>
+                    <div class="timeline-time">10:30</div>
+                    <h4 class="timeline-title">Arrivo in Chiesa</h4>
+                    <p class="timeline-desc">Accoglienza degli ospiti per prepararsi insieme a questo momento speciale.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-icon">💍</div>
+                    <div class="timeline-time">11:00</div>
+                    <h4 class="timeline-title">Inizio Celebrazione</h4>
+                    <p class="timeline-desc">Il rito religioso dove uniremo le nostre vite per sempre.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-icon">🥂</div>
+                    <div class="timeline-time">13:30</div>
+                    <h4 class="timeline-title">Arrivo in Villa</h4>
+                    <p class="timeline-desc">Un brindisi di benvenuto a Villa Carafa per dare inizio ai festeggiamenti.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-icon">🎉</div>
+                    <div class="timeline-time">Fino a tarda sera</div>
+                    <h4 class="timeline-title">Festa e Ricevimento</h4>
+                    <p class="timeline-desc">Cena, musica, balli e tanta gioia da condividere insieme sotto le stelle.</p>
+                </div>
+            </div>
+
+            <div class="floral-divider" style="margin-top: 2rem;"><span>❀</span></div>
+        </section>
+
+        <!-- SEZIONE 4: CHIUSURA INVITO -->
+        <section class="closing-section">
+            <h2 class="closing-text">Non vediamo l'ora<br>di festeggiare con voi</h2>
+            <p class="closing-sub">
+                La vostra presenza renderà questo giorno ancora più magico. 
+                Vi aspettiamo per brindare insieme all'inizio del nostro viaggio più bello.
+            </p>
+            <div class="closing-names">Marika &amp; Angelo</div>
+            <div class="floral-divider" style="margin-top: 2rem;"><span>♥</span></div>
         </section>
 
     </main>
@@ -759,10 +796,7 @@
             function getPos(e) {
                 const rect = canvas.getBoundingClientRect();
                 const point = e.touches ? e.touches[0] : e;
-                return {
-                    x: point.clientX - rect.left,
-                    y: point.clientY - rect.top
-                };
+                return { x: point.clientX - rect.left, y: point.clientY - rect.top };
             }
 
             function scratch(pos, radius = 24) {
@@ -775,13 +809,11 @@
             function startAutoReveal() {
                 if (autoRevealStarted) return;
                 autoRevealStarted = true;
-
                 label.style.opacity = '0';
                 if ('vibrate' in navigator) navigator.vibrate([10, 40, 10]);
 
                 const rect = wrap.getBoundingClientRect();
                 const w = rect.width, h = rect.height;
-
                 const start = performance.now();
                 const DURATION = 1400;
 
@@ -815,8 +847,7 @@
                     } else {
                         ctx.clearRect(0, 0, w, h);
                         revealed = true;
-                        // Una volta rivelato, il canvas non cattura più i tocchi
-                        canvas.style.pointerEvents = 'none';
+                        canvas.style.pointerEvents = 'none'; 
                     }
                 }
                 requestAnimationFrame(animate);
@@ -831,12 +862,10 @@
                     if ('vibrate' in navigator) navigator.vibrate(15);
                     setTimeout(startAutoReveal, 300);
                 }
-                // NON usiamo e.preventDefault() per non bloccare lo scroll
             }
             function move(e) {
                 if (!isDrawing || revealed) return;
                 scratch(getPos(e));
-                // NON usiamo e.preventDefault() per non bloccare lo scroll
             }
             function end() { isDrawing = false; }
 
@@ -860,6 +889,27 @@
                 window.addEventListener('load', resize);
             }
         })();
+
+        /* ===== ANIMAZIONE TIMELINE (Intersection Observer) ===== */
+        document.addEventListener('DOMContentLoaded', () => {
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        // Se vuoi che l'animazione avvenga solo una volta, de-commenta la riga sotto
+                        // observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.2 // L'elemento appare quando è visibile al 20%
+            });
+
+            timelineItems.forEach(item => {
+                observer.observe(item);
+            });
+        });
     </script>
 
 </body>
