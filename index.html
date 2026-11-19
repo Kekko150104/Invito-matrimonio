@@ -7,7 +7,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -16,11 +16,12 @@
             --cream: #fffdf8;
             --gold: #c9a86a;
             --gold-light: #e6d3a3;
-            --gold-dark: #a8874a;
-            --text-dark: #5a4a3a;
-            --text-soft: #8a7560;
-            --rose: #e8c4c4;
-            --shadow-soft: rgba(90, 74, 58, 0.12);
+            --gold-dark: #8a6a2f;      /* più scuro: più leggibile */
+            --gold-deep: #6b4f1f;      /* per testi principali */
+            --text-dark: #4a3a2a;      /* marrone scuro leggibile */
+            --text-soft: #6d5a45;      /* era #8a7560, ora più scuro */
+            --rose: #d9a8a8;
+            --shadow-soft: rgba(74, 58, 42, 0.14);
         }
 
         * { box-sizing: border-box; }
@@ -37,20 +38,19 @@
             overflow-x: hidden;
         }
 
-        /* ===== SFONDO DECORATIVO GLOBALE ===== */
         body::before {
             content: '';
             position: fixed;
             inset: 0;
             background:
-                radial-gradient(circle at 12% 8%, rgba(232, 196, 196, 0.25) 0%, transparent 30%),
+                radial-gradient(circle at 12% 8%, rgba(217, 168, 168, 0.22) 0%, transparent 30%),
                 radial-gradient(circle at 88% 92%, rgba(230, 211, 163, 0.3) 0%, transparent 35%),
                 radial-gradient(circle at 90% 10%, rgba(201, 168, 106, 0.12) 0%, transparent 25%);
             pointer-events: none;
             z-index: 0;
         }
 
-        /* ===== CANCELLO (invariato, solo palette già chiara) ===== */
+        /* ===== CANCELLO ===== */
         #gate-container {
             position: fixed;
             inset: 0;
@@ -97,89 +97,182 @@
             box-shadow: inset 10px 0 40px rgba(201, 168, 106, 0.25), inset 0 0 80px rgba(201, 168, 106, 0.1);
         }
 
-        .gate::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            width: 65%;
-            height: 42%;
-            transform: translateY(-50%);
-            border: 1.5px solid var(--gold);
-            background: radial-gradient(ellipse at center, rgba(230, 211, 163, 0.35) 0%, transparent 70%);
-            box-shadow: 0 0 25px rgba(201, 168, 106, 0.25), inset 0 0 25px rgba(201, 168, 106, 0.15);
-            border-radius: 4px;
-        }
-        .gate.left::before { right: 0; border-right: none; border-radius: 4px 0 0 4px; }
-        .gate.right::before { left: 0; border-left: none; border-radius: 0 4px 4px 0; }
-
+        /* Ornamento superiore (al posto del quadrato) */
         .gate::after {
             content: '❦';
             position: absolute;
-            top: 12%;
+            top: 14%;
             left: 50%;
             transform: translateX(-50%);
             font-size: clamp(2rem, 6vw, 3.5rem);
             color: var(--gold);
             text-shadow: 0 0 12px rgba(201, 168, 106, 0.4);
-            opacity: 0.85;
+            opacity: 0.9;
         }
 
+        /* ===== LETTERE M e L (incise in alto, fuori dalla serratura) ===== */
         .initial {
             position: absolute;
-            top: 50%;
+            top: 26%;
             font-family: 'Great Vibes', cursive;
-            font-size: clamp(4rem, 14vw, 9rem);
+            font-size: clamp(3.5rem, 12vw, 8rem);
             color: var(--gold-dark);
-            text-shadow: 0 0 18px rgba(201, 168, 106, 0.5), 1px 1px 2px rgba(90, 74, 58, 0.2);
+            text-shadow:
+                0 0 18px rgba(201, 168, 106, 0.45),
+                1px 1px 2px rgba(74, 58, 42, 0.25);
             user-select: none;
             z-index: 2;
             transform: translateY(-50%);
             line-height: 1;
         }
-        .gate.left .initial { right: 10%; }
-        .gate.right .initial { left: 10%; }
+        .gate.left .initial { right: 12%; }
+        .gate.right .initial { left: 12%; }
 
-        .handle {
+        /* ===== SERRATURA DA FIABA (al centro, sul bordo dei battenti) ===== */
+        .lock-group {
             position: absolute;
             top: 50%;
-            width: clamp(36px, 7vw, 56px);
-            height: clamp(36px, 7vw, 56px);
-            border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, #fff8e7, var(--gold-light) 40%, var(--gold) 80%, var(--gold-dark));
-            box-shadow: 0 0 18px rgba(201, 168, 106, 0.6), inset 0 0 8px rgba(255, 255, 255, 0.6);
-            transform: translateY(-50%);
-            z-index: 3;
+            left: 0;
+            transform: translate(-50%, -50%);
+            width: clamp(90px, 18vw, 140px);
+            height: clamp(120px, 24vw, 190px);
+            z-index: 5;
+            pointer-events: none;
         }
-        .gate.left .handle { right: calc(clamp(36px, 7vw, 56px) / -2); }
-        .gate.right .handle { left: calc(clamp(36px, 7vw, 56px) / -2); }
+        /* Lo mettiamo solo sul battente sinistro; il destro non lo mostra */
+        .gate.right .lock-group { display: none; }
+
+        /* Piastra a scudo (corpo della serratura) */
+        .lock-plate {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 35% 25%, #fff6e0 0%, transparent 55%),
+                linear-gradient(160deg, var(--gold-light) 0%, var(--gold) 45%, var(--gold-dark) 100%);
+            clip-path: polygon(
+                50% 0%,
+                78% 6%,
+                92% 22%,
+                95% 55%,
+                82% 82%,
+                50% 100%,
+                18% 82%,
+                5% 55%,
+                8% 22%,
+                22% 6%
+            );
+            box-shadow:
+                0 10px 30px rgba(74, 58, 42, 0.25),
+                inset 0 0 25px rgba(255, 246, 224, 0.35),
+                inset 0 -6px 16px rgba(107, 79, 31, 0.35);
+        }
+
+        /* Bordo interno decorativo */
+        .lock-plate::before {
+            content: '';
+            position: absolute;
+            inset: 8%;
+            clip-path: polygon(
+                50% 0%,
+                78% 6%,
+                92% 22%,
+                95% 55%,
+                82% 82%,
+                50% 100%,
+                18% 82%,
+                5% 55%,
+                8% 22%,
+                22% 6%
+            );
+            border: 1.5px solid rgba(107, 79, 31, 0.55);
+            border-radius: 2px;
+        }
+
+        /* Bocchetta della chiave */
+        .keyhole {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 18%;
+            aspect-ratio: 1 / 2.2;
+            background: radial-gradient(circle at 50% 25%, #4a3a2a 0%, #2b1d14 100%);
+            border-radius: 50% 50% 8% 8% / 55% 55% 12% 12%;
+            box-shadow:
+                inset 0 2px 6px rgba(0,0,0,0.8),
+                0 0 0 2px rgba(255,246,224,0.35);
+        }
+        .keyhole::after {
+            content: '';
+            position: absolute;
+            bottom: -22%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 55%;
+            height: 55%;
+            background: #2b1d14;
+            border-radius: 2px;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.9);
+        }
+
+        /* Chiave appesa decorativa */
+        .key {
+            position: absolute;
+            bottom: 6%;
+            left: 50%;
+            transform: translateX(-50%) rotate(-15deg);
+            width: 42%;
+            height: 42%;
+            filter: drop-shadow(0 2px 4px rgba(74, 58, 42, 0.4));
+        }
+        .key svg { width: 100%; height: 100%; display: block; }
+
+        /* Anello superiore della serratura (dove si aggancia) */
+        .lock-ring {
+            position: absolute;
+            top: -10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 38%;
+            aspect-ratio: 1 / 1;
+            border-radius: 50%;
+            border: clamp(4px, 1vw, 6px) solid var(--gold);
+            background: transparent;
+            box-shadow:
+                0 0 12px rgba(201, 168, 106, 0.6),
+                inset 0 0 8px rgba(107, 79, 31, 0.5);
+        }
 
         #gate-container.open .left { transform: rotateY(-115deg); }
         #gate-container.open .right { transform: rotateY(115deg); }
         #gate-container.open { pointer-events: none; }
 
+        /* ===== HINT — sparisce subito all'apertura ===== */
         #hint {
             position: fixed;
             bottom: max(20px, env(safe-area-inset-bottom, 20px));
             left: 50%;
             transform: translateX(-50%);
-            color: var(--gold-dark);
-            font-size: clamp(0.75rem, 2.5vw, 1rem);
+            color: var(--gold-deep);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(0.85rem, 2.8vw, 1.05rem);
+            font-weight: 600;
             letter-spacing: 3px;
             text-transform: uppercase;
             z-index: 101;
             animation: pulse 2s infinite;
             pointer-events: none;
-            transition: opacity 0.5s;
+            transition: opacity 0.4s;
             white-space: nowrap;
             padding: 0 1rem;
         }
         @keyframes pulse {
-            0%, 100% { opacity: 0.5; }
+            0%, 100% { opacity: 0.55; }
             50% { opacity: 1; }
         }
-        #gate-container.open ~ #hint { opacity: 0; }
+        #hint.hidden { opacity: 0 !important; }
 
-        /* ===== CONTENUTO PRINCIPALE ===== */
+        /* ===== CONTENUTO ===== */
         main {
             position: relative;
             z-index: 1;
@@ -193,36 +286,35 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem 1rem 3rem;
+            padding: 2rem 1rem 3.5rem;
             position: relative;
         }
 
         .parchment {
             position: relative;
-            width: min(640px, 92vw);
+            width: min(660px, 92vw);
             background:
                 radial-gradient(ellipse at 20% 15%, rgba(230, 211, 163, 0.25) 0%, transparent 45%),
-                radial-gradient(ellipse at 80% 85%, rgba(232, 196, 196, 0.2) 0%, transparent 45%),
+                radial-gradient(ellipse at 80% 85%, rgba(217, 168, 168, 0.2) 0%, transparent 45%),
                 linear-gradient(160deg, var(--cream) 0%, var(--ivory) 50%, var(--pearl) 100%);
-            border: 1px solid var(--gold-light);
+            border: 1px solid var(--gold);
             border-radius: 8px;
-            padding: clamp(2rem, 7vw, 4rem) clamp(1.5rem, 6vw, 3.5rem);
+            padding: clamp(2.2rem, 7vw, 4rem) clamp(1.5rem, 6vw, 3.5rem);
             box-shadow:
-                0 20px 60px rgba(90, 74, 58, 0.12),
-                0 4px 12px rgba(90, 74, 58, 0.06),
+                0 20px 60px rgba(74, 58, 42, 0.14),
+                0 4px 12px rgba(74, 58, 42, 0.07),
                 inset 0 0 60px rgba(201, 168, 106, 0.08);
             text-align: center;
             overflow: hidden;
         }
 
-        /* Angoli decorativi floreali */
         .parchment::before,
         .parchment::after {
             content: '❀';
             position: absolute;
             font-size: clamp(1.8rem, 5vw, 2.8rem);
-            color: var(--gold-light);
-            opacity: 0.6;
+            color: var(--rose);
+            opacity: 0.7;
             line-height: 1;
         }
         .parchment::before { top: 1.2rem; left: 1.4rem; }
@@ -231,8 +323,8 @@
         .scroll-corner {
             position: absolute;
             font-size: clamp(1.4rem, 4vw, 2rem);
-            color: var(--rose);
-            opacity: 0.55;
+            color: var(--gold);
+            opacity: 0.7;
             line-height: 1;
         }
         .scroll-corner.tl { top: 1.4rem; right: 1.6rem; }
@@ -240,26 +332,26 @@
 
         .invite-label {
             font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(0.7rem, 2.2vw, 0.85rem);
+            font-size: clamp(0.85rem, 2.6vw, 1rem);
+            font-weight: 600;
             letter-spacing: 5px;
             text-transform: uppercase;
-            color: var(--gold-dark);
-            margin: 0 0 1.2rem;
-            opacity: 0.9;
+            color: var(--gold-deep);
+            margin: 0 0 1.4rem;
         }
 
         .invite-names {
             font-family: 'Great Vibes', cursive;
-            font-size: clamp(2.6rem, 10vw, 4.5rem);
-            color: var(--gold-dark);
+            font-size: clamp(3rem, 11vw, 5rem);
+            color: var(--gold-deep);
             line-height: 1.1;
             margin: 0 0 0.4rem;
-            text-shadow: 0 2px 12px rgba(201, 168, 106, 0.3);
+            text-shadow: 0 2px 12px rgba(138, 106, 47, 0.25);
         }
 
         .invite-amp {
             font-family: 'Great Vibes', cursive;
-            font-size: clamp(1.4rem, 5vw, 2rem);
+            font-size: clamp(1.6rem, 5.5vw, 2.2rem);
             color: var(--rose);
             display: block;
             margin: 0.2rem 0;
@@ -270,7 +362,7 @@
             align-items: center;
             justify-content: center;
             gap: 0.8rem;
-            margin: 1.4rem 0;
+            margin: 1.5rem 0;
             color: var(--gold);
         }
         .ornament-divider::before,
@@ -279,49 +371,50 @@
             flex: 1;
             max-width: 90px;
             height: 1px;
-            background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
         }
         .ornament-divider span {
-            font-size: clamp(1rem, 3vw, 1.3rem);
+            font-size: clamp(1.1rem, 3.2vw, 1.4rem);
         }
 
         .invite-text {
             font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(1rem, 3.6vw, 1.2rem);
-            line-height: 1.75;
+            font-size: clamp(1.15rem, 4vw, 1.35rem);
+            line-height: 1.8;
             color: var(--text-dark);
             margin: 0 auto;
             max-width: 46ch;
-            font-weight: 400;
+            font-weight: 500;
         }
 
-        .invite-text p { margin: 0 0 1rem; }
+        .invite-text p { margin: 0 0 1.1rem; }
         .invite-text .em {
             font-family: 'Great Vibes', cursive;
-            font-size: 1.35em;
-            color: var(--gold-dark);
+            font-size: 1.4em;
+            color: var(--gold-deep);
             display: inline-block;
             line-height: 1;
         }
 
         .invite-signature {
             font-family: 'Great Vibes', cursive;
-            font-size: clamp(1.6rem, 6vw, 2.4rem);
-            color: var(--gold-dark);
-            margin-top: 1.6rem;
+            font-size: clamp(1.9rem, 6.5vw, 2.7rem);
+            color: var(--gold-deep);
+            margin-top: 1.8rem;
             line-height: 1.2;
         }
 
         .scroll-down {
             position: absolute;
-            bottom: max(1.5rem, env(safe-area-inset-bottom, 1.5rem));
+            bottom: max(1.6rem, env(safe-area-inset-bottom, 1.6rem));
             left: 50%;
             transform: translateX(-50%);
-            font-size: clamp(0.65rem, 2vw, 0.8rem);
+            font-size: clamp(0.75rem, 2.3vw, 0.9rem);
+            font-weight: 600;
             letter-spacing: 3px;
             text-transform: uppercase;
-            color: var(--gold-dark);
-            opacity: 0.7;
+            color: var(--gold-deep);
+            opacity: 0.85;
             animation: bob 2s infinite;
             pointer-events: none;
             white-space: nowrap;
@@ -329,7 +422,7 @@
         .scroll-down::after {
             content: '⌄';
             display: block;
-            font-size: 1.4em;
+            font-size: 1.5em;
             margin-top: 0.2rem;
         }
         @keyframes bob {
@@ -351,15 +444,16 @@
 
         .section-title {
             font-family: 'Great Vibes', cursive;
-            font-size: clamp(2rem, 8vw, 3.4rem);
-            color: var(--gold-dark);
-            margin: 0 0 0.4rem;
-            text-shadow: 0 2px 12px rgba(201, 168, 106, 0.25);
+            font-size: clamp(2.4rem, 9vw, 3.8rem);
+            color: var(--gold-deep);
+            margin: 0 0 0.5rem;
+            text-shadow: 0 2px 12px rgba(138, 106, 47, 0.2);
         }
 
         .section-sub {
             font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(0.8rem, 2.6vw, 1rem);
+            font-size: clamp(0.95rem, 3vw, 1.15rem);
+            font-weight: 600;
             letter-spacing: 3px;
             text-transform: uppercase;
             color: var(--text-soft);
@@ -371,31 +465,10 @@
             position: relative;
             width: min(340px, 82vw);
             aspect-ratio: 1 / 1;
-            margin: 0 auto 1.6rem;
-            filter: drop-shadow(0 12px 30px rgba(168, 135, 74, 0.25));
+            margin: 0 auto 1.8rem;
+            filter: drop-shadow(0 12px 30px rgba(138, 106, 47, 0.28));
         }
 
-        .scratch-heart {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background:
-                radial-gradient(circle at 30% 25%, #fff6ea 0%, transparent 55%),
-                linear-gradient(150deg, var(--gold-light) 0%, var(--gold) 55%, var(--gold-dark) 100%);
-            /* Sagoma a cuore */
-            clip-path: path('M 170 40 C 170 40, 340 60, 340 190 C 340 290, 170 360, 170 360 C 170 360, 0 290, 0 190 C 0 60, 170 40, 170 40 Z');
-            transform: scale(1);
-            transition: opacity 0.6s;
-            z-index: 2;
-        }
-        /* Uso SVG per il cuore per compatibilità cross-browser */
-        .scratch-heart {
-            clip-path: none;
-            background: transparent;
-        }
         .heart-shape {
             position: absolute;
             inset: 0;
@@ -411,9 +484,10 @@
             width: 100%;
             height: 100%;
             cursor: pointer;
-            border-radius: 50%;
             z-index: 3;
             touch-action: none;
+            -webkit-user-select: none;
+            user-select: none;
         }
         .scratch-label {
             position: absolute;
@@ -425,20 +499,20 @@
             z-index: 4;
             pointer-events: none;
             color: #fffaf0;
-            text-shadow: 0 2px 6px rgba(120, 90, 30, 0.5);
+            text-shadow: 0 2px 6px rgba(74, 58, 42, 0.6);
+            transition: opacity 0.4s;
         }
         .scratch-label .icon {
-            font-size: clamp(1.6rem, 5vw, 2.2rem);
+            font-size: clamp(1.8rem, 5.5vw, 2.4rem);
             line-height: 1;
-            margin-bottom: 0.3rem;
-            opacity: 0.95;
+            margin-bottom: 0.35rem;
         }
         .scratch-label .txt {
             font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(0.65rem, 2.2vw, 0.8rem);
+            font-size: clamp(0.8rem, 2.6vw, 0.95rem);
             letter-spacing: 3px;
             text-transform: uppercase;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .reveal-date {
@@ -449,112 +523,116 @@
             align-items: center;
             justify-content: center;
             z-index: 1;
-            color: var(--gold-dark);
+            color: var(--gold-deep);
         }
         .reveal-date .day {
             font-family: 'Great Vibes', cursive;
-            font-size: clamp(3rem, 14vw, 5rem);
+            font-size: clamp(3.4rem, 15vw, 5.5rem);
             line-height: 1;
-            color: var(--gold-dark);
+            color: var(--gold-deep);
         }
         .reveal-date .month {
             font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(1rem, 3.5vw, 1.3rem);
+            font-size: clamp(1.15rem, 4vw, 1.5rem);
+            font-weight: 600;
             letter-spacing: 6px;
             text-transform: uppercase;
             color: var(--text-dark);
-            margin-top: 0.3rem;
+            margin-top: 0.35rem;
         }
         .reveal-date .year {
             font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(0.85rem, 2.8vw, 1rem);
+            font-size: clamp(1rem, 3.2vw, 1.2rem);
+            font-weight: 600;
             letter-spacing: 4px;
             color: var(--text-soft);
-            margin-top: 0.2rem;
+            margin-top: 0.25rem;
         }
         .reveal-date .heart-mini {
             color: var(--rose);
-            font-size: 1.2rem;
-            margin-top: 0.4rem;
+            font-size: 1.4rem;
+            margin-top: 0.5rem;
         }
 
         /* Conto alla rovescia */
         .countdown {
             display: flex;
             gap: clamp(0.6rem, 3vw, 1.4rem);
-            margin-top: 2.2rem;
+            margin-top: 2.4rem;
             flex-wrap: wrap;
             justify-content: center;
         }
         .cd-box {
-            min-width: clamp(58px, 18vw, 84px);
-            padding: clamp(0.6rem, 2.5vw, 0.9rem) clamp(0.4rem, 2vw, 0.7rem);
+            min-width: clamp(62px, 19vw, 90px);
+            padding: clamp(0.7rem, 2.8vw, 1rem) clamp(0.4rem, 2vw, 0.7rem);
             background: linear-gradient(160deg, var(--cream), var(--pearl));
-            border: 1px solid var(--gold-light);
+            border: 1px solid var(--gold);
             border-radius: 8px;
-            box-shadow: 0 6px 18px rgba(90, 74, 58, 0.08), inset 0 0 20px rgba(201, 168, 106, 0.06);
+            box-shadow: 0 6px 18px rgba(74, 58, 42, 0.1), inset 0 0 20px rgba(201, 168, 106, 0.06);
         }
         .cd-box .num {
             font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(1.4rem, 5.5vw, 2rem);
-            font-weight: 600;
-            color: var(--gold-dark);
+            font-size: clamp(1.6rem, 6vw, 2.2rem);
+            font-weight: 700;
+            color: var(--gold-deep);
             line-height: 1;
             display: block;
         }
         .cd-box .lbl {
             font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(0.55rem, 1.9vw, 0.68rem);
+            font-size: clamp(0.65rem, 2.2vw, 0.78rem);
+            font-weight: 600;
             letter-spacing: 2px;
             text-transform: uppercase;
             color: var(--text-soft);
-            margin-top: 0.35rem;
+            margin-top: 0.4rem;
             display: block;
         }
 
         .cd-caption {
             font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(0.75rem, 2.4vw, 0.9rem);
+            font-size: clamp(0.9rem, 2.8vw, 1.05rem);
+            font-weight: 600;
             letter-spacing: 3px;
             text-transform: uppercase;
             color: var(--text-soft);
-            margin: 1.4rem 0 0;
+            margin: 1.6rem 0 0;
         }
 
-        /* Piccolo ornamento tra sezioni */
         .floral-divider {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.8rem;
             color: var(--rose);
-            font-size: clamp(1rem, 3vw, 1.3rem);
-            margin: 1rem auto;
-            opacity: 0.8;
+            font-size: clamp(1.1rem, 3.2vw, 1.4rem);
+            margin: 1.2rem auto;
+            opacity: 0.9;
         }
         .floral-divider::before,
         .floral-divider::after {
             content: '';
             width: clamp(30px, 12vw, 70px);
             height: 1px;
-            background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
         }
 
         /* ===== MEDIA QUERY MOBILE ===== */
         @media (max-width: 480px) and (orientation: portrait) {
             .scroll-section { padding: 1.5rem 0.8rem 3.5rem; }
-            .parchment { padding: 2rem 1.3rem; }
-            .parchment::before, .parchment::after { font-size: 1.5rem; }
-            .scroll-corner { font-size: 1.2rem; }
+            .parchment { padding: 2.2rem 1.4rem; }
+            .parchment::before, .parchment::after { font-size: 1.6rem; }
+            .scroll-corner { font-size: 1.3rem; }
+            .lock-group { width: clamp(80px, 24vw, 120px); height: clamp(106px, 32vw, 160px); }
         }
         @media (max-height: 500px) and (orientation: landscape) {
             .scroll-section { padding: 1rem 0.8rem 3rem; }
             .parchment { padding: 1.4rem 1.2rem; }
             .parchment::before, .parchment::after { display: none; }
-            .invite-names { font-size: clamp(1.8rem, 8vh, 3rem); }
+            .invite-names { font-size: clamp(2rem, 9vh, 3.2rem); }
+            .lock-group { width: 70px; height: 95px; }
         }
 
-        /* Rispetto per chi preferisce meno animazioni */
         @media (prefers-reduced-motion: reduce) {
             .gate, #hint, .scroll-down { transition: none; animation: none; }
         }
@@ -566,11 +644,25 @@
     <div id="gate-container">
         <div class="gate left">
             <span class="initial">M</span>
-            <div class="handle"></div>
+
+            <!-- Serratura da fiaba -->
+            <div class="lock-group">
+                <div class="lock-ring"></div>
+                <div class="lock-plate">
+                    <div class="keyhole"></div>
+                    <div class="key">
+                        <svg viewBox="0 0 40 60" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="20" cy="14" r="9" fill="none" stroke="#6b4f1f" stroke-width="3"/>
+                            <path d="M 20 23 L 20 52 M 20 44 L 26 44 M 20 50 L 25 50"
+                                  stroke="#6b4f1f" stroke-width="3" stroke-linecap="round" fill="none"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
         </div>
+
         <div class="gate right">
             <span class="initial">L</span>
-            <div class="handle"></div>
         </div>
     </div>
 
@@ -579,7 +671,7 @@
     <!-- CONTENUTO -->
     <main id="main-content">
 
-        <!-- SEZIONE 1: PERGAMENA CON LETTERA D'INVITO -->
+        <!-- SEZIONE 1: PERGAMENA -->
         <section class="scroll-section" id="invito">
             <div class="parchment">
                 <span class="scroll-corner tl">✿</span>
@@ -623,30 +715,26 @@
             <p class="section-sub">Gratta il cuore per scoprire la data</p>
 
             <div class="scratch-wrap">
-                <!-- Cuore in SVG (sagoma) -->
                 <svg class="heart-shape" viewBox="0 0 340 340" aria-hidden="true">
                     <defs>
                         <linearGradient id="goldGradient" x1="0" y1="0" x2="1" y2="1">
                             <stop offset="0%" stop-color="#e6d3a3"/>
                             <stop offset="50%" stop-color="#c9a86a"/>
-                            <stop offset="100%" stop-color="#a8874a"/>
+                            <stop offset="100%" stop-color="#8a6a2f"/>
                         </linearGradient>
                     </defs>
                     <path class="fill" d="M170 300 C 170 300, 20 220, 20 130 C 20 70, 70 40, 115 40 C 145 40, 165 60, 170 85 C 175 60, 195 40, 225 40 C 270 40, 320 70, 320 130 C 320 220, 170 300, 170 300 Z"/>
                 </svg>
 
-                <!-- Data rivelata sotto -->
                 <div class="reveal-date">
                     <span class="day">14</span>
                     <span class="month">Giugno</span>
-                    <span class="year">2026</span>
+                    <span class="year">2027</span>
                     <span class="heart-mini">♥</span>
                 </div>
 
-                <!-- Canvas da grattare sopra -->
                 <canvas class="scratch-canvas" id="scratchCanvas"></canvas>
 
-                <!-- Etichetta iniziale -->
                 <div class="scratch-label" id="scratchLabel">
                     <span class="icon">✧</span>
                     <span class="txt">Gratta qui</span>
@@ -669,6 +757,7 @@
     <script>
         /* ===== APERTURA CANCELLO ===== */
         const gateContainer = document.getElementById('gate-container');
+        const hint = document.getElementById('hint');
         const body = document.body;
         let isOpening = false;
 
@@ -679,23 +768,27 @@
             if (isOpening) return;
             isOpening = true;
 
+            // 1. Nasconde SUBITO l'hint
+            hint.classList.add('hidden');
+
             if ('vibrate' in navigator) navigator.vibrate(30);
 
+            // 2. Piccolo scatto, poi apertura
             setTimeout(() => gateContainer.classList.add('open'), 200);
 
+            // 3. Al termine, rimuove il cancello e sblocca lo scroll
             setTimeout(() => {
                 gateContainer.style.display = 'none';
                 body.classList.remove('locked');
             }, 4000);
         }
 
-        // Blocco scroll finché il cancello è chiuso (evita lo "scorrimento fantasma")
         window.addEventListener('touchmove', (e) => {
             if (body.classList.contains('locked')) e.preventDefault();
         }, { passive: false });
 
-        /* ===== DATA & COUNTDOWN ===== */
-        const WEDDING_DATE = new Date('2026-06-14T11:00:00');
+        /* ===== DATA & COUNTDOWN (14 GIUGNO 2027) ===== */
+        const WEDDING_DATE = new Date('2027-06-14T11:00:00');
 
         function updateCountdown() {
             const now = new Date().getTime();
@@ -722,13 +815,14 @@
         updateCountdown();
         setInterval(updateCountdown, 1000);
 
-        /* ===== CUORE DA GRATTARE (CANVAS) ===== */
+        /* ===== CUORE DA GRATTARE CON AUTO-SVELAMENTO ===== */
         (function initScratch() {
             const canvas = document.getElementById('scratchCanvas');
             const label = document.getElementById('scratchLabel');
             const wrap = canvas.parentElement;
             let ctx, dpr = Math.max(1, window.devicePixelRatio || 1);
             let revealed = false;
+            let autoRevealStarted = false;
 
             function resize() {
                 const rect = wrap.getBoundingClientRect();
@@ -736,20 +830,19 @@
                 canvas.height = rect.height * dpr;
                 ctx = canvas.getContext('2d');
                 ctx.scale(dpr, dpr);
-                drawCover(rect.width, rect.height);
+                if (!revealed) drawCover(rect.width, rect.height);
             }
 
             function drawCover(w, h) {
-                // Riempie il canvas con un colore dorato a "velo" che copre il cuore
                 ctx.globalCompositeOperation = 'source-over';
+                ctx.clearRect(0, 0, w, h);
                 const grad = ctx.createLinearGradient(0, 0, w, h);
                 grad.addColorStop(0, '#e6d3a3');
                 grad.addColorStop(0.5, '#c9a86a');
-                grad.addColorStop(1, '#a8874a');
+                grad.addColorStop(1, '#8a6a2f');
                 ctx.fillStyle = grad;
                 ctx.fillRect(0, 0, w, h);
 
-                // Effetto carta dorata: puntini
                 ctx.fillStyle = 'rgba(255, 250, 240, 0.35)';
                 for (let i = 0; i < 60; i++) {
                     const x = Math.random() * w;
@@ -759,13 +852,6 @@
                     ctx.arc(x, y, r, 0, Math.PI * 2);
                     ctx.fill();
                 }
-
-                // Scritta guida
-                ctx.fillStyle = 'rgba(255, 250, 240, 0.85)';
-                ctx.font = `600 ${Math.min(16, w * 0.05)}px "Cormorant Garamond", serif`;
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText('GRATTA', w / 2, h / 2 + 26);
             }
 
             let isDrawing = false;
@@ -779,57 +865,100 @@
                 };
             }
 
-            function scratch(pos) {
+            function scratch(pos, radius = 24) {
                 ctx.globalCompositeOperation = 'destination-out';
                 ctx.beginPath();
-                ctx.arc(pos.x, pos.y, 24, 0, Math.PI * 2);
+                ctx.arc(pos.x, pos.y, radius, 0, Math.PI * 2);
                 ctx.fill();
+            }
 
-                if (!revealed) {
-                    revealed = true;
-                    label.style.opacity = '0';
-                    label.style.transition = 'opacity 0.4s';
-                    if ('vibrate' in navigator) navigator.vibrate(15);
+            // Avvia lo svelamento automatico con un'onda di "cancellazione"
+            function startAutoReveal() {
+                if (autoRevealStarted) return;
+                autoRevealStarted = true;
+
+                label.style.opacity = '0';
+                if ('vibrate' in navigator) navigator.vibrate([10, 40, 10]);
+
+                const rect = wrap.getBoundingClientRect();
+                const w = rect.width, h = rect.height;
+
+                // Pulisce in modo progressivo con un effetto a onda dal centro
+                const start = performance.now();
+                const DURATION = 1400;
+
+                function animate(now) {
+                    const t = Math.min(1, (now - start) / DURATION);
+                    const eased = 1 - Math.pow(1 - t, 3); // ease-out cubic
+
+                    // Cancella "a onde" concentriche dal centro
+                    ctx.globalCompositeOperation = 'destination-out';
+                    const cx = w / 2, cy = h / 2;
+                    const maxR = Math.sqrt(w * w + h * h) / 2;
+                    const currentR = maxR * eased;
+
+                    // Riempie un'area circolare crescente
+                    ctx.beginPath();
+                    ctx.arc(cx, cy, currentR, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Aggiunge un po' di "frastagliatura" per un effetto naturale
+                    for (let i = 0; i < 8; i++) {
+                        const angle = (Math.PI * 2 / 8) * i + t * 3;
+                        const dist = currentR * (0.85 + Math.random() * 0.15);
+                        const px = cx + Math.cos(angle) * dist;
+                        const py = cy + Math.sin(angle) * dist;
+                        if (dist < maxR) {
+                            ctx.beginPath();
+                            ctx.arc(px, py, 18 + Math.random() * 12, 0, Math.PI * 2);
+                            ctx.fill();
+                        }
+                    }
+
+                    if (t < 1) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        // Finito: pulizia totale
+                        ctx.clearRect(0, 0, w, h);
+                        revealed = true;
+                    }
                 }
+                requestAnimationFrame(animate);
             }
 
             function start(e) {
+                if (revealed) return;
                 isDrawing = true;
                 scratch(getPos(e));
+
+                if (!autoRevealStarted) {
+                    if ('vibrate' in navigator) navigator.vibrate(15);
+                    // Dopo un primo "grattata" (300ms) parte l'auto-svelamento
+                    setTimeout(startAutoReveal, 300);
+                }
                 e.preventDefault();
             }
             function move(e) {
-                if (!isDrawing) return;
+                if (!isDrawing || revealed) return;
                 scratch(getPos(e));
                 e.preventDefault();
             }
             function end() { isDrawing = false; }
 
-            // Eventi mouse
             canvas.addEventListener('mousedown', start);
             canvas.addEventListener('mousemove', move);
             window.addEventListener('mouseup', end);
 
-            // Eventi touch
             canvas.addEventListener('touchstart', start, { passive: false });
             canvas.addEventListener('touchmove', move, { passive: false });
             canvas.addEventListener('touchend', end);
 
-            // Ridimensionamento
             let resizeTimer;
             window.addEventListener('resize', () => {
                 clearTimeout(resizeTimer);
-                resizeTimer = setTimeout(() => {
-                    const wasRevealed = revealed;
-                    resize();
-                    if (wasRevealed) {
-                        // Se già rivelato, ridisegna trasparente (già scoperto)
-                        ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    }
-                }, 150);
+                resizeTimer = setTimeout(resize, 150);
             });
 
-            // Init dopo il caricamento font
             if (document.fonts && document.fonts.ready) {
                 document.fonts.ready.then(resize);
             } else {
