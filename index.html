@@ -3,60 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Il Nostro Matrimonio</title>
-    
+    <title>M & L — Il Nostro Matrimonio</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            /* Palette chiara e signorile */
             --ivory: #faf6ef;
             --pearl: #f4efe6;
+            --cream: #fffdf8;
             --gold: #c9a86a;
             --gold-light: #e6d3a3;
             --gold-dark: #a8874a;
             --text-dark: #5a4a3a;
-            --shadow-soft: rgba(90, 74, 58, 0.15);
+            --text-soft: #8a7560;
+            --rose: #e8c4c4;
+            --shadow-soft: rgba(90, 74, 58, 0.12);
         }
 
         * { box-sizing: border-box; }
 
-        body, html {
+        html { scroll-behavior: smooth; }
+
+        body {
             margin: 0;
             padding: 0;
-            height: 100%;
-            height: 100dvh; /* Altezza dinamica per mobile */
-            overflow: hidden;
             font-family: 'Cormorant Garamond', serif;
             background-color: var(--ivory);
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        /* Contenuto sotto il cancello */
-        #content {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            font-size: clamp(2.5rem, 8vw, 5rem);
             color: var(--text-dark);
-            font-family: 'Great Vibes', cursive;
-            padding: 1rem;
-            text-align: center;
+            -webkit-tap-highlight-color: transparent;
+            overflow-x: hidden;
         }
 
-        /* ===== CONTENITORE CANCELLO ===== */
+        /* ===== SFONDO DECORATIVO GLOBALE ===== */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle at 12% 8%, rgba(232, 196, 196, 0.25) 0%, transparent 30%),
+                radial-gradient(circle at 88% 92%, rgba(230, 211, 163, 0.3) 0%, transparent 35%),
+                radial-gradient(circle at 90% 10%, rgba(201, 168, 106, 0.12) 0%, transparent 25%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ===== CANCELLO (invariato, solo palette già chiara) ===== */
         #gate-container {
             position: fixed;
             inset: 0;
             display: flex;
-            z-index: 10;
+            z-index: 100;
             perspective: 2000px;
         }
 
-        /* ===== BATTENTE ===== */
         .gate {
             width: 50%;
             height: 100%;
@@ -65,17 +67,14 @@
             cursor: pointer;
             transition: transform 3.5s cubic-bezier(0.65, 0, 0.35, 1);
             transform-style: preserve-3d;
-            /* Sfondo avorio con texture leggera */
-            background: 
-                linear-gradient(180deg, var(--pearl) 0%, var(--ivory) 50%, var(--pearl) 100%);
+            background: linear-gradient(180deg, var(--pearl) 0%, var(--ivory) 50%, var(--pearl) 100%);
             box-shadow: inset 0 0 80px rgba(201, 168, 106, 0.15);
         }
 
-        /* Sbarre verticali dorate chiare */
         .gate.left,
         .gate.right {
-            background-image: 
-                repeating-linear-gradient(90deg, 
+            background-image:
+                repeating-linear-gradient(90deg,
                     transparent 0,
                     transparent 8%,
                     rgba(201, 168, 106, 0.18) 8%,
@@ -89,20 +88,15 @@
         .gate.left {
             transform-origin: left center;
             border-right: 2px solid var(--gold);
-            box-shadow: 
-                inset -10px 0 40px rgba(201, 168, 106, 0.25),
-                inset 0 0 80px rgba(201, 168, 106, 0.1);
+            box-shadow: inset -10px 0 40px rgba(201, 168, 106, 0.25), inset 0 0 80px rgba(201, 168, 106, 0.1);
         }
 
         .gate.right {
             transform-origin: right center;
             border-left: 2px solid var(--gold);
-            box-shadow: 
-                inset 10px 0 40px rgba(201, 168, 106, 0.25),
-                inset 0 0 80px rgba(201, 168, 106, 0.1);
+            box-shadow: inset 10px 0 40px rgba(201, 168, 106, 0.25), inset 0 0 80px rgba(201, 168, 106, 0.1);
         }
 
-        /* Pannello decorativo interno */
         .gate::before {
             content: '';
             position: absolute;
@@ -112,15 +106,12 @@
             transform: translateY(-50%);
             border: 1.5px solid var(--gold);
             background: radial-gradient(ellipse at center, rgba(230, 211, 163, 0.35) 0%, transparent 70%);
-            box-shadow: 
-                0 0 25px rgba(201, 168, 106, 0.25),
-                inset 0 0 25px rgba(201, 168, 106, 0.15);
+            box-shadow: 0 0 25px rgba(201, 168, 106, 0.25), inset 0 0 25px rgba(201, 168, 106, 0.15);
             border-radius: 4px;
         }
         .gate.left::before { right: 0; border-right: none; border-radius: 4px 0 0 4px; }
         .gate.right::before { left: 0; border-left: none; border-radius: 0 4px 4px 0; }
 
-        /* Ornamento superiore */
         .gate::after {
             content: '❦';
             position: absolute;
@@ -133,17 +124,13 @@
             opacity: 0.85;
         }
 
-        /* ===== LETTERE M e L ===== */
         .initial {
             position: absolute;
             top: 50%;
             font-family: 'Great Vibes', cursive;
-            /* Dimensione fluida: min 3rem, ideale 14vw, max 9rem */
             font-size: clamp(4rem, 14vw, 9rem);
             color: var(--gold-dark);
-            text-shadow: 
-                0 0 18px rgba(201, 168, 106, 0.5),
-                1px 1px 2px rgba(90, 74, 58, 0.2);
+            text-shadow: 0 0 18px rgba(201, 168, 106, 0.5), 1px 1px 2px rgba(90, 74, 58, 0.2);
             user-select: none;
             z-index: 2;
             transform: translateY(-50%);
@@ -152,7 +139,6 @@
         .gate.left .initial { right: 10%; }
         .gate.right .initial { left: 10%; }
 
-        /* Medaglione centrale */
         .handle {
             position: absolute;
             top: 50%;
@@ -160,32 +146,27 @@
             height: clamp(36px, 7vw, 56px);
             border-radius: 50%;
             background: radial-gradient(circle at 30% 30%, #fff8e7, var(--gold-light) 40%, var(--gold) 80%, var(--gold-dark));
-            box-shadow: 
-                0 0 18px rgba(201, 168, 106, 0.6),
-                inset 0 0 8px rgba(255, 255, 255, 0.6);
+            box-shadow: 0 0 18px rgba(201, 168, 106, 0.6), inset 0 0 8px rgba(255, 255, 255, 0.6);
             transform: translateY(-50%);
             z-index: 3;
         }
         .gate.left .handle { right: calc(clamp(36px, 7vw, 56px) / -2); }
         .gate.right .handle { left: calc(clamp(36px, 7vw, 56px) / -2); }
 
-        /* ===== STATO APERTO ===== */
         #gate-container.open .left { transform: rotateY(-115deg); }
         #gate-container.open .right { transform: rotateY(115deg); }
         #gate-container.open { pointer-events: none; }
 
-        /* Hint in basso */
         #hint {
             position: fixed;
             bottom: max(20px, env(safe-area-inset-bottom, 20px));
             left: 50%;
             transform: translateX(-50%);
             color: var(--gold-dark);
-            font-family: 'Cormorant Garamond', serif;
             font-size: clamp(0.75rem, 2.5vw, 1rem);
             letter-spacing: 3px;
             text-transform: uppercase;
-            z-index: 11;
+            z-index: 101;
             animation: pulse 2s infinite;
             pointer-events: none;
             transition: opacity 0.5s;
@@ -198,53 +179,390 @@
         }
         #gate-container.open ~ #hint { opacity: 0; }
 
-        /* ===== MEDIA QUERY: TELEFONO IN VERTICALE ===== */
+        /* ===== CONTENUTO PRINCIPALE ===== */
+        main {
+            position: relative;
+            z-index: 1;
+            opacity: 1;
+        }
+        body.locked { overflow: hidden; }
+
+        /* ===== SEZIONE 1: PERGAMENA ===== */
+        .scroll-section {
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem 3rem;
+            position: relative;
+        }
+
+        .parchment {
+            position: relative;
+            width: min(640px, 92vw);
+            background:
+                radial-gradient(ellipse at 20% 15%, rgba(230, 211, 163, 0.25) 0%, transparent 45%),
+                radial-gradient(ellipse at 80% 85%, rgba(232, 196, 196, 0.2) 0%, transparent 45%),
+                linear-gradient(160deg, var(--cream) 0%, var(--ivory) 50%, var(--pearl) 100%);
+            border: 1px solid var(--gold-light);
+            border-radius: 8px;
+            padding: clamp(2rem, 7vw, 4rem) clamp(1.5rem, 6vw, 3.5rem);
+            box-shadow:
+                0 20px 60px rgba(90, 74, 58, 0.12),
+                0 4px 12px rgba(90, 74, 58, 0.06),
+                inset 0 0 60px rgba(201, 168, 106, 0.08);
+            text-align: center;
+            overflow: hidden;
+        }
+
+        /* Angoli decorativi floreali */
+        .parchment::before,
+        .parchment::after {
+            content: '❀';
+            position: absolute;
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            color: var(--gold-light);
+            opacity: 0.6;
+            line-height: 1;
+        }
+        .parchment::before { top: 1.2rem; left: 1.4rem; }
+        .parchment::after { bottom: 1.2rem; right: 1.4rem; transform: rotate(180deg); }
+
+        .scroll-corner {
+            position: absolute;
+            font-size: clamp(1.4rem, 4vw, 2rem);
+            color: var(--rose);
+            opacity: 0.55;
+            line-height: 1;
+        }
+        .scroll-corner.tl { top: 1.4rem; right: 1.6rem; }
+        .scroll-corner.br { bottom: 1.4rem; left: 1.6rem; }
+
+        .invite-label {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(0.7rem, 2.2vw, 0.85rem);
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--gold-dark);
+            margin: 0 0 1.2rem;
+            opacity: 0.9;
+        }
+
+        .invite-names {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(2.6rem, 10vw, 4.5rem);
+            color: var(--gold-dark);
+            line-height: 1.1;
+            margin: 0 0 0.4rem;
+            text-shadow: 0 2px 12px rgba(201, 168, 106, 0.3);
+        }
+
+        .invite-amp {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(1.4rem, 5vw, 2rem);
+            color: var(--rose);
+            display: block;
+            margin: 0.2rem 0;
+        }
+
+        .ornament-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            margin: 1.4rem 0;
+            color: var(--gold);
+        }
+        .ornament-divider::before,
+        .ornament-divider::after {
+            content: '';
+            flex: 1;
+            max-width: 90px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+        }
+        .ornament-divider span {
+            font-size: clamp(1rem, 3vw, 1.3rem);
+        }
+
+        .invite-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1rem, 3.6vw, 1.2rem);
+            line-height: 1.75;
+            color: var(--text-dark);
+            margin: 0 auto;
+            max-width: 46ch;
+            font-weight: 400;
+        }
+
+        .invite-text p { margin: 0 0 1rem; }
+        .invite-text .em {
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.35em;
+            color: var(--gold-dark);
+            display: inline-block;
+            line-height: 1;
+        }
+
+        .invite-signature {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(1.6rem, 6vw, 2.4rem);
+            color: var(--gold-dark);
+            margin-top: 1.6rem;
+            line-height: 1.2;
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: max(1.5rem, env(safe-area-inset-bottom, 1.5rem));
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: clamp(0.65rem, 2vw, 0.8rem);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold-dark);
+            opacity: 0.7;
+            animation: bob 2s infinite;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        .scroll-down::after {
+            content: '⌄';
+            display: block;
+            font-size: 1.4em;
+            margin-top: 0.2rem;
+        }
+        @keyframes bob {
+            0%, 100% { transform: translate(-50%, 0); }
+            50% { transform: translate(-50%, 6px); }
+        }
+
+        /* ===== SEZIONE 2: DATA DA GRATTARE ===== */
+        .scratch-section {
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 1rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(2rem, 8vw, 3.4rem);
+            color: var(--gold-dark);
+            margin: 0 0 0.4rem;
+            text-shadow: 0 2px 12px rgba(201, 168, 106, 0.25);
+        }
+
+        .section-sub {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(0.8rem, 2.6vw, 1rem);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-soft);
+            margin: 0 0 2rem;
+        }
+
+        /* Cuore da grattare */
+        .scratch-wrap {
+            position: relative;
+            width: min(340px, 82vw);
+            aspect-ratio: 1 / 1;
+            margin: 0 auto 1.6rem;
+            filter: drop-shadow(0 12px 30px rgba(168, 135, 74, 0.25));
+        }
+
+        .scratch-heart {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background:
+                radial-gradient(circle at 30% 25%, #fff6ea 0%, transparent 55%),
+                linear-gradient(150deg, var(--gold-light) 0%, var(--gold) 55%, var(--gold-dark) 100%);
+            /* Sagoma a cuore */
+            clip-path: path('M 170 40 C 170 40, 340 60, 340 190 C 340 290, 170 360, 170 360 C 170 360, 0 290, 0 190 C 0 60, 170 40, 170 40 Z');
+            transform: scale(1);
+            transition: opacity 0.6s;
+            z-index: 2;
+        }
+        /* Uso SVG per il cuore per compatibilità cross-browser */
+        .scratch-heart {
+            clip-path: none;
+            background: transparent;
+        }
+        .heart-shape {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .heart-shape .fill {
+            fill: url(#goldGradient);
+        }
+        .scratch-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            border-radius: 50%;
+            z-index: 3;
+            touch-action: none;
+        }
+        .scratch-label {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 4;
+            pointer-events: none;
+            color: #fffaf0;
+            text-shadow: 0 2px 6px rgba(120, 90, 30, 0.5);
+        }
+        .scratch-label .icon {
+            font-size: clamp(1.6rem, 5vw, 2.2rem);
+            line-height: 1;
+            margin-bottom: 0.3rem;
+            opacity: 0.95;
+        }
+        .scratch-label .txt {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(0.65rem, 2.2vw, 0.8rem);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .reveal-date {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            color: var(--gold-dark);
+        }
+        .reveal-date .day {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(3rem, 14vw, 5rem);
+            line-height: 1;
+            color: var(--gold-dark);
+        }
+        .reveal-date .month {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1rem, 3.5vw, 1.3rem);
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: var(--text-dark);
+            margin-top: 0.3rem;
+        }
+        .reveal-date .year {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(0.85rem, 2.8vw, 1rem);
+            letter-spacing: 4px;
+            color: var(--text-soft);
+            margin-top: 0.2rem;
+        }
+        .reveal-date .heart-mini {
+            color: var(--rose);
+            font-size: 1.2rem;
+            margin-top: 0.4rem;
+        }
+
+        /* Conto alla rovescia */
+        .countdown {
+            display: flex;
+            gap: clamp(0.6rem, 3vw, 1.4rem);
+            margin-top: 2.2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .cd-box {
+            min-width: clamp(58px, 18vw, 84px);
+            padding: clamp(0.6rem, 2.5vw, 0.9rem) clamp(0.4rem, 2vw, 0.7rem);
+            background: linear-gradient(160deg, var(--cream), var(--pearl));
+            border: 1px solid var(--gold-light);
+            border-radius: 8px;
+            box-shadow: 0 6px 18px rgba(90, 74, 58, 0.08), inset 0 0 20px rgba(201, 168, 106, 0.06);
+        }
+        .cd-box .num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.4rem, 5.5vw, 2rem);
+            font-weight: 600;
+            color: var(--gold-dark);
+            line-height: 1;
+            display: block;
+        }
+        .cd-box .lbl {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(0.55rem, 1.9vw, 0.68rem);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-soft);
+            margin-top: 0.35rem;
+            display: block;
+        }
+
+        .cd-caption {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(0.75rem, 2.4vw, 0.9rem);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-soft);
+            margin: 1.4rem 0 0;
+        }
+
+        /* Piccolo ornamento tra sezioni */
+        .floral-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            color: var(--rose);
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            margin: 1rem auto;
+            opacity: 0.8;
+        }
+        .floral-divider::before,
+        .floral-divider::after {
+            content: '';
+            width: clamp(30px, 12vw, 70px);
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+        }
+
+        /* ===== MEDIA QUERY MOBILE ===== */
         @media (max-width: 480px) and (orientation: portrait) {
-            .gate::before {
-                width: 72%;
-                height: 36%;
-            }
-            .gate::after {
-                top: 10%;
-            }
-            .initial {
-                /* Su telefono meglio un po' più contenuto */
-                font-size: clamp(3.5rem, 16vw, 6rem);
-            }
-            .gate.left .initial { right: 8%; }
-            .gate.right .initial { left: 8%; }
-            #hint {
-                letter-spacing: 2px;
-                bottom: max(16px, env(safe-area-inset-bottom, 16px));
-            }
+            .scroll-section { padding: 1.5rem 0.8rem 3.5rem; }
+            .parchment { padding: 2rem 1.3rem; }
+            .parchment::before, .parchment::after { font-size: 1.5rem; }
+            .scroll-corner { font-size: 1.2rem; }
         }
-
-        /* ===== TELEFONO IN ORIZZONTALE ===== */
         @media (max-height: 500px) and (orientation: landscape) {
-            .gate::before {
-                width: 55%;
-                height: 55%;
-            }
-            .gate::after { display: none; }
-            .initial {
-                font-size: clamp(2.5rem, 10vh, 5rem);
-            }
+            .scroll-section { padding: 1rem 0.8rem 3rem; }
+            .parchment { padding: 1.4rem 1.2rem; }
+            .parchment::before, .parchment::after { display: none; }
+            .invite-names { font-size: clamp(1.8rem, 8vh, 3rem); }
         }
 
-        /* ===== TABLET ===== */
-        @media (min-width: 481px) and (max-width: 1024px) {
-            .initial {
-                font-size: clamp(5rem, 12vw, 8rem);
-            }
+        /* Rispetto per chi preferisce meno animazioni */
+        @media (prefers-reduced-motion: reduce) {
+            .gate, #hint, .scroll-down { transition: none; animation: none; }
         }
     </style>
 </head>
-<body>
+<body class="locked">
 
-    <div id="content">Ciao</div>
-
-    <div id="hint">Clicca per aprire</div>
-
+    <!-- CANCELLO -->
     <div id="gate-container">
         <div class="gate left">
             <span class="initial">M</span>
@@ -256,31 +574,268 @@
         </div>
     </div>
 
+    <div id="hint">Clicca per aprire</div>
+
+    <!-- CONTENUTO -->
+    <main id="main-content">
+
+        <!-- SEZIONE 1: PERGAMENA CON LETTERA D'INVITO -->
+        <section class="scroll-section" id="invito">
+            <div class="parchment">
+                <span class="scroll-corner tl">✿</span>
+                <span class="scroll-corner br">✿</span>
+
+                <p class="invite-label">Insieme ai loro genitori</p>
+
+                <h1 class="invite-names">
+                    Martina
+                    <span class="invite-amp">e</span>
+                    Lorenzo
+                </h1>
+
+                <div class="ornament-divider"><span>❦</span></div>
+
+                <div class="invite-text">
+                    <p>Con immensa gioia nel cuore,<br>
+                    hanno il piacere di invitarvi<br>
+                    a celebrare il giorno più bello<br>
+                    della loro vita.</p>
+
+                    <p>Ci uniremo in matrimonio<br>
+                    e desideriamo che siate al nostro fianco<br>
+                    per condividere con noi<br>
+                    <span class="em">l'inizio del nostro per sempre.</span></p>
+
+                    <p>La vostra presenza sarà il dono più prezioso.</p>
+                </div>
+
+                <div class="invite-signature">Martina &amp; Lorenzo</div>
+
+                <div class="ornament-divider"><span>❀</span></div>
+            </div>
+
+            <div class="scroll-down">Scorri per scoprire</div>
+        </section>
+
+        <!-- SEZIONE 2: DATA DA GRATTARE -->
+        <section class="scratch-section" id="data">
+            <h2 class="section-title">Quando</h2>
+            <p class="section-sub">Gratta il cuore per scoprire la data</p>
+
+            <div class="scratch-wrap">
+                <!-- Cuore in SVG (sagoma) -->
+                <svg class="heart-shape" viewBox="0 0 340 340" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="goldGradient" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0%" stop-color="#e6d3a3"/>
+                            <stop offset="50%" stop-color="#c9a86a"/>
+                            <stop offset="100%" stop-color="#a8874a"/>
+                        </linearGradient>
+                    </defs>
+                    <path class="fill" d="M170 300 C 170 300, 20 220, 20 130 C 20 70, 70 40, 115 40 C 145 40, 165 60, 170 85 C 175 60, 195 40, 225 40 C 270 40, 320 70, 320 130 C 320 220, 170 300, 170 300 Z"/>
+                </svg>
+
+                <!-- Data rivelata sotto -->
+                <div class="reveal-date">
+                    <span class="day">14</span>
+                    <span class="month">Giugno</span>
+                    <span class="year">2026</span>
+                    <span class="heart-mini">♥</span>
+                </div>
+
+                <!-- Canvas da grattare sopra -->
+                <canvas class="scratch-canvas" id="scratchCanvas"></canvas>
+
+                <!-- Etichetta iniziale -->
+                <div class="scratch-label" id="scratchLabel">
+                    <span class="icon">✧</span>
+                    <span class="txt">Gratta qui</span>
+                </div>
+            </div>
+
+            <p class="cd-caption">Mancano</p>
+            <div class="countdown" id="countdown">
+                <div class="cd-box"><span class="num" id="cd-days">--</span><span class="lbl">Giorni</span></div>
+                <div class="cd-box"><span class="num" id="cd-hours">--</span><span class="lbl">Ore</span></div>
+                <div class="cd-box"><span class="num" id="cd-mins">--</span><span class="lbl">Minuti</span></div>
+                <div class="cd-box"><span class="num" id="cd-secs">--</span><span class="lbl">Secondi</span></div>
+            </div>
+
+            <div class="floral-divider"><span>❀</span></div>
+        </section>
+
+    </main>
+
     <script>
+        /* ===== APERTURA CANCELLO ===== */
         const gateContainer = document.getElementById('gate-container');
+        const body = document.body;
         let isOpening = false;
 
-        // Aggiungiamo il tocco come evento per mobile (più reattivo del click)
         gateContainer.addEventListener('click', openGate);
         gateContainer.addEventListener('touchstart', openGate, { passive: true });
 
-        function openGate(e) {
+        function openGate() {
             if (isOpening) return;
             isOpening = true;
-            
-            // Vibrazione leggera su mobile (se supportata)
-            if ('vibrate' in navigator) {
-                navigator.vibrate(30);
-            }
 
-            setTimeout(() => {
-                gateContainer.classList.add('open');
-            }, 200);
+            if ('vibrate' in navigator) navigator.vibrate(30);
+
+            setTimeout(() => gateContainer.classList.add('open'), 200);
 
             setTimeout(() => {
                 gateContainer.style.display = 'none';
+                body.classList.remove('locked');
             }, 4000);
         }
+
+        // Blocco scroll finché il cancello è chiuso (evita lo "scorrimento fantasma")
+        window.addEventListener('touchmove', (e) => {
+            if (body.classList.contains('locked')) e.preventDefault();
+        }, { passive: false });
+
+        /* ===== DATA & COUNTDOWN ===== */
+        const WEDDING_DATE = new Date('2026-06-14T11:00:00');
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const diff = WEDDING_DATE.getTime() - now;
+            const $ = (id) => document.getElementById(id);
+
+            if (diff <= 0) {
+                $('cd-days').textContent = '0';
+                $('cd-hours').textContent = '0';
+                $('cd-mins').textContent = '0';
+                $('cd-secs').textContent = '0';
+                return;
+            }
+            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+            $('cd-days').textContent = d;
+            $('cd-hours').textContent = String(h).padStart(2, '0');
+            $('cd-mins').textContent = String(m).padStart(2, '0');
+            $('cd-secs').textContent = String(s).padStart(2, '0');
+        }
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        /* ===== CUORE DA GRATTARE (CANVAS) ===== */
+        (function initScratch() {
+            const canvas = document.getElementById('scratchCanvas');
+            const label = document.getElementById('scratchLabel');
+            const wrap = canvas.parentElement;
+            let ctx, dpr = Math.max(1, window.devicePixelRatio || 1);
+            let revealed = false;
+
+            function resize() {
+                const rect = wrap.getBoundingClientRect();
+                canvas.width = rect.width * dpr;
+                canvas.height = rect.height * dpr;
+                ctx = canvas.getContext('2d');
+                ctx.scale(dpr, dpr);
+                drawCover(rect.width, rect.height);
+            }
+
+            function drawCover(w, h) {
+                // Riempie il canvas con un colore dorato a "velo" che copre il cuore
+                ctx.globalCompositeOperation = 'source-over';
+                const grad = ctx.createLinearGradient(0, 0, w, h);
+                grad.addColorStop(0, '#e6d3a3');
+                grad.addColorStop(0.5, '#c9a86a');
+                grad.addColorStop(1, '#a8874a');
+                ctx.fillStyle = grad;
+                ctx.fillRect(0, 0, w, h);
+
+                // Effetto carta dorata: puntini
+                ctx.fillStyle = 'rgba(255, 250, 240, 0.35)';
+                for (let i = 0; i < 60; i++) {
+                    const x = Math.random() * w;
+                    const y = Math.random() * h;
+                    const r = Math.random() * 1.5 + 0.3;
+                    ctx.beginPath();
+                    ctx.arc(x, y, r, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+
+                // Scritta guida
+                ctx.fillStyle = 'rgba(255, 250, 240, 0.85)';
+                ctx.font = `600 ${Math.min(16, w * 0.05)}px "Cormorant Garamond", serif`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('GRATTA', w / 2, h / 2 + 26);
+            }
+
+            let isDrawing = false;
+
+            function getPos(e) {
+                const rect = canvas.getBoundingClientRect();
+                const point = e.touches ? e.touches[0] : e;
+                return {
+                    x: point.clientX - rect.left,
+                    y: point.clientY - rect.top
+                };
+            }
+
+            function scratch(pos) {
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.beginPath();
+                ctx.arc(pos.x, pos.y, 24, 0, Math.PI * 2);
+                ctx.fill();
+
+                if (!revealed) {
+                    revealed = true;
+                    label.style.opacity = '0';
+                    label.style.transition = 'opacity 0.4s';
+                    if ('vibrate' in navigator) navigator.vibrate(15);
+                }
+            }
+
+            function start(e) {
+                isDrawing = true;
+                scratch(getPos(e));
+                e.preventDefault();
+            }
+            function move(e) {
+                if (!isDrawing) return;
+                scratch(getPos(e));
+                e.preventDefault();
+            }
+            function end() { isDrawing = false; }
+
+            // Eventi mouse
+            canvas.addEventListener('mousedown', start);
+            canvas.addEventListener('mousemove', move);
+            window.addEventListener('mouseup', end);
+
+            // Eventi touch
+            canvas.addEventListener('touchstart', start, { passive: false });
+            canvas.addEventListener('touchmove', move, { passive: false });
+            canvas.addEventListener('touchend', end);
+
+            // Ridimensionamento
+            let resizeTimer;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => {
+                    const wasRevealed = revealed;
+                    resize();
+                    if (wasRevealed) {
+                        // Se già rivelato, ridisegna trasparente (già scoperto)
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    }
+                }, 150);
+            });
+
+            // Init dopo il caricamento font
+            if (document.fonts && document.fonts.ready) {
+                document.fonts.ready.then(resize);
+            } else {
+                window.addEventListener('load', resize);
+            }
+        })();
     </script>
 
 </body>
