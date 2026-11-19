@@ -2,120 +2,135 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Il Nostro Matrimonio</title>
     
-    <!-- Font eleganti da Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
     
     <style>
+        :root {
+            /* Palette chiara e signorile */
+            --ivory: #faf6ef;
+            --pearl: #f4efe6;
+            --gold: #c9a86a;
+            --gold-light: #e6d3a3;
+            --gold-dark: #a8874a;
+            --text-dark: #5a4a3a;
+            --shadow-soft: rgba(90, 74, 58, 0.15);
+        }
+
+        * { box-sizing: border-box; }
+
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
+            height: 100dvh; /* Altezza dinamica per mobile */
             overflow: hidden;
             font-family: 'Cormorant Garamond', serif;
-            background-color: #f4f1ea;
+            background-color: var(--ivory);
+            -webkit-tap-highlight-color: transparent;
         }
 
-        /* Sfondo della pagina sotto (visibile quando il cancello si apre) */
+        /* Contenuto sotto il cancello */
         #content {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100%;
-            font-size: 4rem;
-            color: #3e2723;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            color: var(--text-dark);
             font-family: 'Great Vibes', cursive;
+            padding: 1rem;
+            text-align: center;
         }
 
-        /* ===== CONTENITORE DEL CANCELLO ===== */
+        /* ===== CONTENITORE CANCELLO ===== */
         #gate-container {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             display: flex;
             z-index: 10;
-            perspective: 2000px; /* Fondamentale per l'effetto 3D di apertura */
+            perspective: 2000px;
         }
 
-        /* ===== SINGOLO BATTENTE ===== */
+        /* ===== BATTENTE ===== */
         .gate {
             width: 50%;
             height: 100%;
             position: relative;
             pointer-events: auto;
             cursor: pointer;
-            /* Transizione lenta e "pesante" per simulare un cancello vero */
             transition: transform 3.5s cubic-bezier(0.65, 0, 0.35, 1);
             transform-style: preserve-3d;
-            /* Sfondo in ferro scuro con texture */
+            /* Sfondo avorio con texture leggera */
             background: 
-                linear-gradient(180deg, #2b1d14 0%, #1a110b 50%, #2b1d14 100%);
-            box-shadow: inset 0 0 100px rgba(0,0,0,0.8);
+                linear-gradient(180deg, var(--pearl) 0%, var(--ivory) 50%, var(--pearl) 100%);
+            box-shadow: inset 0 0 80px rgba(201, 168, 106, 0.15);
+        }
+
+        /* Sbarre verticali dorate chiare */
+        .gate.left,
+        .gate.right {
+            background-image: 
+                repeating-linear-gradient(90deg, 
+                    transparent 0,
+                    transparent 8%,
+                    rgba(201, 168, 106, 0.18) 8%,
+                    rgba(201, 168, 106, 0.18) 9%,
+                    transparent 9%,
+                    transparent 18%
+                ),
+                linear-gradient(180deg, var(--pearl) 0%, var(--ivory) 50%, var(--pearl) 100%);
         }
 
         .gate.left {
             transform-origin: left center;
-            border-right: 3px solid #b8860b;
-            /* Sbarre verticali */
-            background-image: 
-                repeating-linear-gradient(90deg, 
-                    transparent 0px, 
-                    transparent 40px, 
-                    rgba(0,0,0,0.6) 40px, 
-                    rgba(0,0,0,0.6) 48px,
-                    transparent 48px,
-                    transparent 88px
-                ),
-                linear-gradient(180deg, #2b1d14 0%, #1a110b 50%, #2b1d14 100%);
+            border-right: 2px solid var(--gold);
+            box-shadow: 
+                inset -10px 0 40px rgba(201, 168, 106, 0.25),
+                inset 0 0 80px rgba(201, 168, 106, 0.1);
         }
 
         .gate.right {
             transform-origin: right center;
-            border-left: 3px solid #b8860b;
-            background-image: 
-                repeating-linear-gradient(90deg, 
-                    transparent 0px, 
-                    transparent 40px, 
-                    rgba(0,0,0,0.6) 40px, 
-                    rgba(0,0,0,0.6) 48px,
-                    transparent 48px,
-                    transparent 88px
-                ),
-                linear-gradient(180deg, #2b1d14 0%, #1a110b 50%, #2b1d14 100%);
+            border-left: 2px solid var(--gold);
+            box-shadow: 
+                inset 10px 0 40px rgba(201, 168, 106, 0.25),
+                inset 0 0 80px rgba(201, 168, 106, 0.1);
         }
 
-        /* Pannello decorativo centrale in oro (dove stanno le lettere) */
+        /* Pannello decorativo interno */
         .gate::before {
             content: '';
             position: absolute;
             top: 50%;
-            width: 60%;
-            height: 40%;
+            width: 65%;
+            height: 42%;
             transform: translateY(-50%);
-            border: 2px solid #b8860b;
-            background: radial-gradient(ellipse at center, rgba(184,134,11,0.15) 0%, transparent 70%);
-            box-shadow: 0 0 30px rgba(184,134,11,0.3), inset 0 0 30px rgba(0,0,0,0.5);
+            border: 1.5px solid var(--gold);
+            background: radial-gradient(ellipse at center, rgba(230, 211, 163, 0.35) 0%, transparent 70%);
+            box-shadow: 
+                0 0 25px rgba(201, 168, 106, 0.25),
+                inset 0 0 25px rgba(201, 168, 106, 0.15);
+            border-radius: 4px;
         }
-        .gate.left::before { right: 0; border-right: none; }
-        .gate.right::before { left: 0; border-left: none; }
+        .gate.left::before { right: 0; border-right: none; border-radius: 4px 0 0 4px; }
+        .gate.right::before { left: 0; border-left: none; border-radius: 0 4px 4px 0; }
 
-        /* Decorazione floreale in alto */
+        /* Ornamento superiore */
         .gate::after {
             content: '❦';
             position: absolute;
-            top: 15%;
+            top: 12%;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 4rem;
-            color: #d4af37;
-            text-shadow: 0 0 10px rgba(212,175,55,0.6);
-            opacity: 0.7;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            color: var(--gold);
+            text-shadow: 0 0 12px rgba(201, 168, 106, 0.4);
+            opacity: 0.85;
         }
 
         /* ===== LETTERE M e L ===== */
@@ -123,75 +138,110 @@
             position: absolute;
             top: 50%;
             font-family: 'Great Vibes', cursive;
-            font-size: 18vw;
-            color: #d4af37;
+            /* Dimensione fluida: min 3rem, ideale 14vw, max 9rem */
+            font-size: clamp(4rem, 14vw, 9rem);
+            color: var(--gold-dark);
             text-shadow: 
-                0 0 20px rgba(212,175,55,0.6),
-                2px 2px 4px rgba(0,0,0,0.8);
+                0 0 18px rgba(201, 168, 106, 0.5),
+                1px 1px 2px rgba(90, 74, 58, 0.2);
             user-select: none;
             z-index: 2;
             transform: translateY(-50%);
             line-height: 1;
         }
-        .gate.left .initial { right: 8%; }
-        .gate.right .initial { left: 8%; }
+        .gate.left .initial { right: 10%; }
+        .gate.right .initial { left: 10%; }
 
-        /* Maniglia / medaglione centrale */
+        /* Medaglione centrale */
         .handle {
             position: absolute;
             top: 50%;
-            width: 60px;
-            height: 60px;
+            width: clamp(36px, 7vw, 56px);
+            height: clamp(36px, 7vw, 56px);
             border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, #f0d97a, #b8860b 60%, #6b4f0a);
-            box-shadow: 0 0 15px rgba(212,175,55,0.8), inset 0 0 10px rgba(0,0,0,0.4);
+            background: radial-gradient(circle at 30% 30%, #fff8e7, var(--gold-light) 40%, var(--gold) 80%, var(--gold-dark));
+            box-shadow: 
+                0 0 18px rgba(201, 168, 106, 0.6),
+                inset 0 0 8px rgba(255, 255, 255, 0.6);
             transform: translateY(-50%);
             z-index: 3;
         }
-        .gate.left .handle { right: -30px; }
-        .gate.right .handle { left: -30px; }
+        .gate.left .handle { right: calc(clamp(36px, 7vw, 56px) / -2); }
+        .gate.right .handle { left: calc(clamp(36px, 7vw, 56px) / -2); }
 
         /* ===== STATO APERTO ===== */
-        #gate-container.open .left {
-            transform: rotateY(-115deg);
-        }
-        #gate-container.open .right {
-            transform: rotateY(115deg);
-        }
+        #gate-container.open .left { transform: rotateY(-115deg); }
+        #gate-container.open .right { transform: rotateY(115deg); }
+        #gate-container.open { pointer-events: none; }
 
-        /* Quando il cancello è aperto, disabilitiamo i click */
-        #gate-container.open {
-            pointer-events: none;
-        }
-
-        /* Messaggio "clicca per aprire" */
+        /* Hint in basso */
         #hint {
             position: fixed;
-            bottom: 30px;
+            bottom: max(20px, env(safe-area-inset-bottom, 20px));
             left: 50%;
             transform: translateX(-50%);
-            color: #d4af37;
+            color: var(--gold-dark);
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.1rem;
+            font-size: clamp(0.75rem, 2.5vw, 1rem);
             letter-spacing: 3px;
             text-transform: uppercase;
             z-index: 11;
             animation: pulse 2s infinite;
             pointer-events: none;
             transition: opacity 0.5s;
+            white-space: nowrap;
+            padding: 0 1rem;
         }
         @keyframes pulse {
-            0%, 100% { opacity: 0.4; }
+            0%, 100% { opacity: 0.5; }
             50% { opacity: 1; }
         }
         #gate-container.open ~ #hint { opacity: 0; }
+
+        /* ===== MEDIA QUERY: TELEFONO IN VERTICALE ===== */
+        @media (max-width: 480px) and (orientation: portrait) {
+            .gate::before {
+                width: 72%;
+                height: 36%;
+            }
+            .gate::after {
+                top: 10%;
+            }
+            .initial {
+                /* Su telefono meglio un po' più contenuto */
+                font-size: clamp(3.5rem, 16vw, 6rem);
+            }
+            .gate.left .initial { right: 8%; }
+            .gate.right .initial { left: 8%; }
+            #hint {
+                letter-spacing: 2px;
+                bottom: max(16px, env(safe-area-inset-bottom, 16px));
+            }
+        }
+
+        /* ===== TELEFONO IN ORIZZONTALE ===== */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .gate::before {
+                width: 55%;
+                height: 55%;
+            }
+            .gate::after { display: none; }
+            .initial {
+                font-size: clamp(2.5rem, 10vh, 5rem);
+            }
+        }
+
+        /* ===== TABLET ===== */
+        @media (min-width: 481px) and (max-width: 1024px) {
+            .initial {
+                font-size: clamp(5rem, 12vw, 8rem);
+            }
+        }
     </style>
 </head>
 <body>
 
-    <div id="content">
-        Ciao
-    </div>
+    <div id="content">Ciao</div>
 
     <div id="hint">Clicca per aprire</div>
 
@@ -210,21 +260,27 @@
         const gateContainer = document.getElementById('gate-container');
         let isOpening = false;
 
-        gateContainer.addEventListener('click', () => {
-            if (isOpening) return; // Evita click multipli
+        // Aggiungiamo il tocco come evento per mobile (più reattivo del click)
+        gateContainer.addEventListener('click', openGate);
+        gateContainer.addEventListener('touchstart', openGate, { passive: true });
+
+        function openGate(e) {
+            if (isOpening) return;
             isOpening = true;
             
-            // Piccolo "scatto" iniziale: il cancello si solleva leggermente
-            // prima di aprirsi, come se si sbloccasse
+            // Vibrazione leggera su mobile (se supportata)
+            if ('vibrate' in navigator) {
+                navigator.vibrate(30);
+            }
+
             setTimeout(() => {
                 gateContainer.classList.add('open');
             }, 200);
 
-            // Rimuoviamo completamente il cancello dopo l'animazione
             setTimeout(() => {
                 gateContainer.style.display = 'none';
             }, 4000);
-        });
+        }
     </script>
 
 </body>
