@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>M & L — Il Nostro Matrimonio</title>
+    <title>Marika & Angelo — Il Nostro Matrimonio</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,10 +16,10 @@
             --cream: #fffdf8;
             --gold: #c9a86a;
             --gold-light: #e6d3a3;
-            --gold-dark: #8a6a2f;      /* più scuro: più leggibile */
-            --gold-deep: #6b4f1f;      /* per testi principali */
-            --text-dark: #4a3a2a;      /* marrone scuro leggibile */
-            --text-soft: #6d5a45;      /* era #8a7560, ora più scuro */
+            --gold-dark: #8a6a2f;
+            --gold-deep: #6b4f1f;
+            --text-dark: #4a3a2a;
+            --text-soft: #6d5a45;
             --rose: #d9a8a8;
             --shadow-soft: rgba(74, 58, 42, 0.14);
         }
@@ -50,210 +50,78 @@
             z-index: 0;
         }
 
-        /* ===== CANCELLO ===== */
+        /* ===== CANCELLO CON IMMAGINE ===== */
         #gate-container {
             position: fixed;
             inset: 0;
             display: flex;
             z-index: 100;
-            perspective: 2000px;
+            perspective: 2500px;
+            background-color: #f4efe6; /* Fallback nel caso l'immagine ci metta a caricare */
         }
 
         .gate {
             width: 50%;
             height: 100%;
             position: relative;
-            pointer-events: auto;
             cursor: pointer;
-            transition: transform 3.5s cubic-bezier(0.65, 0, 0.35, 1);
+            /* Transizione lenta e maestosa */
+            transition: transform 4s cubic-bezier(0.645, 0.045, 0.355, 1);
             transform-style: preserve-3d;
-            background: linear-gradient(180deg, var(--pearl) 0%, var(--ivory) 50%, var(--pearl) 100%);
-            box-shadow: inset 0 0 80px rgba(201, 168, 106, 0.15);
-        }
-
-        .gate.left,
-        .gate.right {
-            background-image:
-                repeating-linear-gradient(90deg,
-                    transparent 0,
-                    transparent 8%,
-                    rgba(201, 168, 106, 0.18) 8%,
-                    rgba(201, 168, 106, 0.18) 9%,
-                    transparent 9%,
-                    transparent 18%
-                ),
-                linear-gradient(180deg, var(--pearl) 0%, var(--ivory) 50%, var(--pearl) 100%);
+            
+            /* L'immagine di sfondo viene adattata e posizionata in base alla metà */
+            background-image: url('cancello.jpg'); /* Assicurati che il nome sia esatto */
+            background-size: 200% 100%; /* L'immagine è larga il doppio per mostrare metà a testa */
+            background-repeat: no-repeat;
+            
+            /* Leggera ombra per dare tridimensionalità */
+            box-shadow: inset 0 0 50px rgba(107, 79, 31, 0.15);
         }
 
         .gate.left {
             transform-origin: left center;
-            border-right: 2px solid var(--gold);
-            box-shadow: inset -10px 0 40px rgba(201, 168, 106, 0.25), inset 0 0 80px rgba(201, 168, 106, 0.1);
+            background-position: left center;
         }
 
         .gate.right {
             transform-origin: right center;
-            border-left: 2px solid var(--gold);
-            box-shadow: inset 10px 0 40px rgba(201, 168, 106, 0.25), inset 0 0 80px rgba(201, 168, 106, 0.1);
+            background-position: right center;
         }
 
-        /* Ornamento superiore (al posto del quadrato) */
-        .gate::after {
-            content: '❦';
-            position: absolute;
-            top: 14%;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: clamp(2rem, 6vw, 3.5rem);
-            color: var(--gold);
-            text-shadow: 0 0 12px rgba(201, 168, 106, 0.4);
-            opacity: 0.9;
-        }
-
-        /* ===== LETTERE M e L (incise in alto, fuori dalla serratura) ===== */
-        .initial {
-            position: absolute;
-            top: 26%;
-            font-family: 'Great Vibes', cursive;
-            font-size: clamp(3.5rem, 12vw, 8rem);
-            color: var(--gold-dark);
-            text-shadow:
-                0 0 18px rgba(201, 168, 106, 0.45),
-                1px 1px 2px rgba(74, 58, 42, 0.25);
-            user-select: none;
-            z-index: 2;
-            transform: translateY(-50%);
-            line-height: 1;
-        }
-        .gate.left .initial { right: 12%; }
-        .gate.right .initial { left: 12%; }
-
-        /* ===== SERRATURA DA FIABA (al centro, sul bordo dei battenti) ===== */
-        .lock-group {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            transform: translate(-50%, -50%);
-            width: clamp(90px, 18vw, 140px);
-            height: clamp(120px, 24vw, 190px);
-            z-index: 5;
-            pointer-events: none;
-        }
-        /* Lo mettiamo solo sul battente sinistro; il destro non lo mostra */
-        .gate.right .lock-group { display: none; }
-
-        /* Piastra a scudo (corpo della serratura) */
-        .lock-plate {
-            position: absolute;
-            inset: 0;
-            background:
-                radial-gradient(ellipse at 35% 25%, #fff6e0 0%, transparent 55%),
-                linear-gradient(160deg, var(--gold-light) 0%, var(--gold) 45%, var(--gold-dark) 100%);
-            clip-path: polygon(
-                50% 0%,
-                78% 6%,
-                92% 22%,
-                95% 55%,
-                82% 82%,
-                50% 100%,
-                18% 82%,
-                5% 55%,
-                8% 22%,
-                22% 6%
-            );
-            box-shadow:
-                0 10px 30px rgba(74, 58, 42, 0.25),
-                inset 0 0 25px rgba(255, 246, 224, 0.35),
-                inset 0 -6px 16px rgba(107, 79, 31, 0.35);
-        }
-
-        /* Bordo interno decorativo */
-        .lock-plate::before {
+        /* Aggiungiamo una linea centrale sottile per coprire la giunzione in modo netto */
+        .gate.left::after {
             content: '';
             position: absolute;
-            inset: 8%;
-            clip-path: polygon(
-                50% 0%,
-                78% 6%,
-                92% 22%,
-                95% 55%,
-                82% 82%,
-                50% 100%,
-                18% 82%,
-                5% 55%,
-                8% 22%,
-                22% 6%
-            );
-            border: 1.5px solid rgba(107, 79, 31, 0.55);
-            border-radius: 2px;
+            top: 0;
+            right: 0;
+            width: 1px;
+            height: 100%;
+            background: rgba(107, 79, 31, 0.3);
+            box-shadow: 1px 0 5px rgba(0,0,0,0.1);
         }
 
-        /* Bocchetta della chiave */
-        .keyhole {
-            position: absolute;
-            top: 30%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 18%;
-            aspect-ratio: 1 / 2.2;
-            background: radial-gradient(circle at 50% 25%, #4a3a2a 0%, #2b1d14 100%);
-            border-radius: 50% 50% 8% 8% / 55% 55% 12% 12%;
-            box-shadow:
-                inset 0 2px 6px rgba(0,0,0,0.8),
-                0 0 0 2px rgba(255,246,224,0.35);
+        /* Apertura verso l'esterno */
+        #gate-container.open .left { 
+            transform: rotateY(-115deg); 
+            box-shadow: -20px 0 50px rgba(0,0,0,0.3);
         }
-        .keyhole::after {
-            content: '';
-            position: absolute;
-            bottom: -22%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 55%;
-            height: 55%;
-            background: #2b1d14;
-            border-radius: 2px;
-            box-shadow: inset 0 1px 2px rgba(0,0,0,0.9);
+        #gate-container.open .right { 
+            transform: rotateY(115deg); 
+            box-shadow: 20px 0 50px rgba(0,0,0,0.3);
         }
-
-        /* Chiave appesa decorativa */
-        .key {
-            position: absolute;
-            bottom: 6%;
-            left: 50%;
-            transform: translateX(-50%) rotate(-15deg);
-            width: 42%;
-            height: 42%;
-            filter: drop-shadow(0 2px 4px rgba(74, 58, 42, 0.4));
-        }
-        .key svg { width: 100%; height: 100%; display: block; }
-
-        /* Anello superiore della serratura (dove si aggancia) */
-        .lock-ring {
-            position: absolute;
-            top: -10%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 38%;
-            aspect-ratio: 1 / 1;
-            border-radius: 50%;
-            border: clamp(4px, 1vw, 6px) solid var(--gold);
-            background: transparent;
-            box-shadow:
-                0 0 12px rgba(201, 168, 106, 0.6),
-                inset 0 0 8px rgba(107, 79, 31, 0.5);
-        }
-
-        #gate-container.open .left { transform: rotateY(-115deg); }
-        #gate-container.open .right { transform: rotateY(115deg); }
         #gate-container.open { pointer-events: none; }
 
-        /* ===== HINT — sparisce subito all'apertura ===== */
+        /* ===== HINT ===== */
         #hint {
             position: fixed;
             bottom: max(20px, env(safe-area-inset-bottom, 20px));
             left: 50%;
             transform: translateX(-50%);
             color: var(--gold-deep);
+            background: rgba(255, 253, 248, 0.85); /* Sfondo semitrasparente per leggibilità */
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--gold-light);
             font-family: 'Cormorant Garamond', serif;
             font-size: clamp(0.85rem, 2.8vw, 1.05rem);
             font-weight: 600;
@@ -264,11 +132,11 @@
             pointer-events: none;
             transition: opacity 0.4s;
             white-space: nowrap;
-            padding: 0 1rem;
+            backdrop-filter: blur(4px);
         }
         @keyframes pulse {
-            0%, 100% { opacity: 0.55; }
-            50% { opacity: 1; }
+            0%, 100% { opacity: 0.7; transform: translate(-50%, 0); }
+            50% { opacity: 1; transform: translate(-50%, -5px); }
         }
         #hint.hidden { opacity: 0 !important; }
 
@@ -460,7 +328,6 @@
             margin: 0 0 2rem;
         }
 
-        /* Cuore da grattare */
         .scratch-wrap {
             position: relative;
             width: min(340px, 82vw);
@@ -554,7 +421,6 @@
             margin-top: 0.5rem;
         }
 
-        /* Conto alla rovescia */
         .countdown {
             display: flex;
             gap: clamp(0.6rem, 3vw, 1.4rem);
@@ -617,20 +483,17 @@
             background: linear-gradient(90deg, transparent, var(--gold), transparent);
         }
 
-        /* ===== MEDIA QUERY MOBILE ===== */
         @media (max-width: 480px) and (orientation: portrait) {
             .scroll-section { padding: 1.5rem 0.8rem 3.5rem; }
             .parchment { padding: 2.2rem 1.4rem; }
             .parchment::before, .parchment::after { font-size: 1.6rem; }
             .scroll-corner { font-size: 1.3rem; }
-            .lock-group { width: clamp(80px, 24vw, 120px); height: clamp(106px, 32vw, 160px); }
         }
         @media (max-height: 500px) and (orientation: landscape) {
             .scroll-section { padding: 1rem 0.8rem 3rem; }
             .parchment { padding: 1.4rem 1.2rem; }
             .parchment::before, .parchment::after { display: none; }
             .invite-names { font-size: clamp(2rem, 9vh, 3.2rem); }
-            .lock-group { width: 70px; height: 95px; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -640,30 +503,10 @@
 </head>
 <body class="locked">
 
-    <!-- CANCELLO -->
+    <!-- CANCELLO CON IMMAGINE DIVISA A META' -->
     <div id="gate-container">
-        <div class="gate left">
-            <span class="initial">M</span>
-
-            <!-- Serratura da fiaba -->
-            <div class="lock-group">
-                <div class="lock-ring"></div>
-                <div class="lock-plate">
-                    <div class="keyhole"></div>
-                    <div class="key">
-                        <svg viewBox="0 0 40 60" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="20" cy="14" r="9" fill="none" stroke="#6b4f1f" stroke-width="3"/>
-                            <path d="M 20 23 L 20 52 M 20 44 L 26 44 M 20 50 L 25 50"
-                                  stroke="#6b4f1f" stroke-width="3" stroke-linecap="round" fill="none"/>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="gate right">
-            <span class="initial">L</span>
-        </div>
+        <div class="gate left"></div>
+        <div class="gate right"></div>
     </div>
 
     <div id="hint">Clicca per aprire</div>
@@ -680,9 +523,9 @@
                 <p class="invite-label">Insieme ai loro genitori</p>
 
                 <h1 class="invite-names">
-                    Martina
+                    Marika
                     <span class="invite-amp">e</span>
-                    Lorenzo
+                    Angelo
                 </h1>
 
                 <div class="ornament-divider"><span>❦</span></div>
@@ -701,7 +544,7 @@
                     <p>La vostra presenza sarà il dono più prezioso.</p>
                 </div>
 
-                <div class="invite-signature">Martina &amp; Lorenzo</div>
+                <div class="invite-signature">Marika &amp; Angelo</div>
 
                 <div class="ornament-divider"><span>❀</span></div>
             </div>
@@ -727,7 +570,7 @@
                 </svg>
 
                 <div class="reveal-date">
-                    <span class="day">14</span>
+                    <span class="day">02</span>
                     <span class="month">Giugno</span>
                     <span class="year">2027</span>
                     <span class="heart-mini">♥</span>
@@ -768,27 +611,26 @@
             if (isOpening) return;
             isOpening = true;
 
-            // 1. Nasconde SUBITO l'hint
             hint.classList.add('hidden');
 
-            if ('vibrate' in navigator) navigator.vibrate(30);
+            if ('vibrate' in navigator) navigator.vibrate(40);
 
-            // 2. Piccolo scatto, poi apertura
-            setTimeout(() => gateContainer.classList.add('open'), 200);
+            // Ritardo brevissimo per far recepire il click, poi apre
+            setTimeout(() => gateContainer.classList.add('open'), 100);
 
-            // 3. Al termine, rimuove il cancello e sblocca lo scroll
+            // Sblocca lo scroll dopo l'animazione (4s)
             setTimeout(() => {
                 gateContainer.style.display = 'none';
                 body.classList.remove('locked');
-            }, 4000);
+            }, 4200);
         }
 
         window.addEventListener('touchmove', (e) => {
             if (body.classList.contains('locked')) e.preventDefault();
         }, { passive: false });
 
-        /* ===== DATA & COUNTDOWN (14 GIUGNO 2027) ===== */
-        const WEDDING_DATE = new Date('2027-06-14T11:00:00');
+        /* ===== DATA & COUNTDOWN (02 GIUGNO 2027) ===== */
+        const WEDDING_DATE = new Date('2027-06-02T11:00:00');
 
         function updateCountdown() {
             const now = new Date().getTime();
@@ -815,7 +657,7 @@
         updateCountdown();
         setInterval(updateCountdown, 1000);
 
-        /* ===== CUORE DA GRATTARE CON AUTO-SVELAMENTO ===== */
+        /* ===== CUORE DA GRATTARE ===== */
         (function initScratch() {
             const canvas = document.getElementById('scratchCanvas');
             const label = document.getElementById('scratchLabel');
@@ -872,7 +714,6 @@
                 ctx.fill();
             }
 
-            // Avvia lo svelamento automatico con un'onda di "cancellazione"
             function startAutoReveal() {
                 if (autoRevealStarted) return;
                 autoRevealStarted = true;
@@ -883,26 +724,22 @@
                 const rect = wrap.getBoundingClientRect();
                 const w = rect.width, h = rect.height;
 
-                // Pulisce in modo progressivo con un effetto a onda dal centro
                 const start = performance.now();
                 const DURATION = 1400;
 
                 function animate(now) {
                     const t = Math.min(1, (now - start) / DURATION);
-                    const eased = 1 - Math.pow(1 - t, 3); // ease-out cubic
+                    const eased = 1 - Math.pow(1 - t, 3);
 
-                    // Cancella "a onde" concentriche dal centro
                     ctx.globalCompositeOperation = 'destination-out';
                     const cx = w / 2, cy = h / 2;
                     const maxR = Math.sqrt(w * w + h * h) / 2;
                     const currentR = maxR * eased;
 
-                    // Riempie un'area circolare crescente
                     ctx.beginPath();
                     ctx.arc(cx, cy, currentR, 0, Math.PI * 2);
                     ctx.fill();
 
-                    // Aggiunge un po' di "frastagliatura" per un effetto naturale
                     for (let i = 0; i < 8; i++) {
                         const angle = (Math.PI * 2 / 8) * i + t * 3;
                         const dist = currentR * (0.85 + Math.random() * 0.15);
@@ -918,7 +755,6 @@
                     if (t < 1) {
                         requestAnimationFrame(animate);
                     } else {
-                        // Finito: pulizia totale
                         ctx.clearRect(0, 0, w, h);
                         revealed = true;
                     }
@@ -933,7 +769,6 @@
 
                 if (!autoRevealStarted) {
                     if ('vibrate' in navigator) navigator.vibrate(15);
-                    // Dopo un primo "grattata" (300ms) parte l'auto-svelamento
                     setTimeout(startAutoReveal, 300);
                 }
                 e.preventDefault();
