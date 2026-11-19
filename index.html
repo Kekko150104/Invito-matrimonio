@@ -50,14 +50,14 @@
             z-index: 0;
         }
 
-        /* ===== CANCELLO CON IMMAGINE ===== */
+        /* ===== CANCELLO ===== */
         #gate-container {
             position: fixed;
             inset: 0;
             display: flex;
             z-index: 100;
             perspective: 2500px;
-            background-color: #f4efe6; /* Fallback nel caso l'immagine ci metta a caricare */
+            background-color: #f4efe6;
         }
 
         .gate {
@@ -65,16 +65,11 @@
             height: 100%;
             position: relative;
             cursor: pointer;
-            /* Transizione lenta e maestosa */
             transition: transform 4s cubic-bezier(0.645, 0.045, 0.355, 1);
             transform-style: preserve-3d;
-            
-            /* L'immagine di sfondo viene adattata e posizionata in base alla metà */
-            background-image: url('cancello.jpg'); /* Assicurati che il nome sia esatto */
-            background-size: 200% 100%; /* L'immagine è larga il doppio per mostrare metà a testa */
+            background-image: url('cancello.jpg'); /* Assicurati che il nome sia corretto */
+            background-size: 200% 100%;
             background-repeat: no-repeat;
-            
-            /* Leggera ombra per dare tridimensionalità */
             box-shadow: inset 0 0 50px rgba(107, 79, 31, 0.15);
         }
 
@@ -88,7 +83,6 @@
             background-position: right center;
         }
 
-        /* Aggiungiamo una linea centrale sottile per coprire la giunzione in modo netto */
         .gate.left::after {
             content: '';
             position: absolute;
@@ -100,7 +94,6 @@
             box-shadow: 1px 0 5px rgba(0,0,0,0.1);
         }
 
-        /* Apertura verso l'esterno */
         #gate-container.open .left { 
             transform: rotateY(-115deg); 
             box-shadow: -20px 0 50px rgba(0,0,0,0.3);
@@ -111,14 +104,13 @@
         }
         #gate-container.open { pointer-events: none; }
 
-        /* ===== HINT ===== */
         #hint {
             position: fixed;
             bottom: max(20px, env(safe-area-inset-bottom, 20px));
             left: 50%;
             transform: translateX(-50%);
             color: var(--gold-deep);
-            background: rgba(255, 253, 248, 0.85); /* Sfondo semitrasparente per leggibilità */
+            background: rgba(255, 253, 248, 0.85);
             padding: 8px 16px;
             border-radius: 20px;
             border: 1px solid var(--gold-light);
@@ -272,32 +264,6 @@
             line-height: 1.2;
         }
 
-        .scroll-down {
-            position: absolute;
-            bottom: max(1.6rem, env(safe-area-inset-bottom, 1.6rem));
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: clamp(0.75rem, 2.3vw, 0.9rem);
-            font-weight: 600;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--gold-deep);
-            opacity: 0.85;
-            animation: bob 2s infinite;
-            pointer-events: none;
-            white-space: nowrap;
-        }
-        .scroll-down::after {
-            content: '⌄';
-            display: block;
-            font-size: 1.5em;
-            margin-top: 0.2rem;
-        }
-        @keyframes bob {
-            0%, 100% { transform: translate(-50%, 0); }
-            50% { transform: translate(-50%, 6px); }
-        }
-
         /* ===== SEZIONE 2: DATA DA GRATTARE ===== */
         .scratch-section {
             min-height: 100dvh;
@@ -334,6 +300,8 @@
             aspect-ratio: 1 / 1;
             margin: 0 auto 1.8rem;
             filter: drop-shadow(0 12px 30px rgba(138, 106, 47, 0.28));
+            /* Permette lo scroll verticale se si inizia il tocco sul cuore */
+            touch-action: pan-y; 
         }
 
         .heart-shape {
@@ -352,7 +320,8 @@
             height: 100%;
             cursor: pointer;
             z-index: 3;
-            touch-action: none;
+            /* Fondamentale: permette lo scroll verticale della pagina */
+            touch-action: pan-y; 
             -webkit-user-select: none;
             user-select: none;
         }
@@ -465,6 +434,73 @@
             margin: 1.6rem 0 0;
         }
 
+        /* ===== SEZIONE 3: LOCATION ===== */
+        .location-section {
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 1rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .location-card {
+            background: linear-gradient(160deg, var(--cream), var(--pearl));
+            border: 1px solid var(--gold);
+            border-radius: 12px;
+            width: min(700px, 92vw);
+            padding: clamp(1.5rem, 5vw, 2.5rem);
+            box-shadow: 0 15px 45px rgba(74, 58, 42, 0.12);
+            margin-bottom: 2rem;
+        }
+
+        .location-image {
+            width: 100%;
+            height: clamp(180px, 35vh, 280px);
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--gold-light);
+            /* Se l'immagine da Google non dovesse caricare, questo colore di sfondo farà da fallback */
+            background-color: var(--pearl); 
+        }
+
+        .location-name {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(2rem, 7vw, 3rem);
+            color: var(--gold-deep);
+            margin: 0 0 0.5rem;
+        }
+
+        .location-desc {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.05rem, 3.5vw, 1.25rem);
+            line-height: 1.7;
+            color: var(--text-dark);
+            margin: 0 auto;
+            font-weight: 500;
+        }
+
+        .map-container {
+            width: min(700px, 92vw);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid var(--gold);
+            box-shadow: 0 10px 30px rgba(74, 58, 42, 0.15);
+            background: var(--pearl);
+            /* Altezza del widget mappa */
+            height: clamp(250px, 40vh, 350px); 
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
         .floral-divider {
             display: flex;
             align-items: center;
@@ -503,7 +539,6 @@
 </head>
 <body class="locked">
 
-    <!-- CANCELLO CON IMMAGINE DIVISA A META' -->
     <div id="gate-container">
         <div class="gate left"></div>
         <div class="gate right"></div>
@@ -511,7 +546,6 @@
 
     <div id="hint">Clicca per aprire</div>
 
-    <!-- CONTENUTO -->
     <main id="main-content">
 
         <!-- SEZIONE 1: PERGAMENA -->
@@ -548,8 +582,6 @@
 
                 <div class="ornament-divider"><span>❀</span></div>
             </div>
-
-            <div class="scroll-down">Scorri per scoprire</div>
         </section>
 
         <!-- SEZIONE 2: DATA DA GRATTARE -->
@@ -591,6 +623,34 @@
                 <div class="cd-box"><span class="num" id="cd-mins">--</span><span class="lbl">Minuti</span></div>
                 <div class="cd-box"><span class="num" id="cd-secs">--</span><span class="lbl">Secondi</span></div>
             </div>
+        </section>
+
+        <!-- SEZIONE 3: LOCATION -->
+        <section class="location-section" id="location">
+            <h2 class="section-title" style="margin-bottom: 2rem;">La Location</h2>
+
+            <div class="location-card">
+                <!-- Immagine presa da Google (sostituisci l'URL se preferisci un'altra foto) -->
+                <img class="location-image" 
+                     src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
+                     alt="Villa Carafa Andria">
+                
+                <h3 class="location-name">Villa Carafa</h3>
+                <p class="location-desc">
+                    Un luogo incantato nel cuore della Murgia pugliese, dove storia, eleganza e natura si fondono in un'atmosfera senza tempo. 
+                    Saremo felici di celebrare il nostro giorno speciale in questa dimora storica, circondati dal verde dei suoi giardini secolari.
+                </p>
+            </div>
+
+            <!-- Widget Google Maps per Villa Carafa Andria -->
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3012.343465117336!2d16.28341331533184!3d41.2227639792793!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1339b5e5d5d5d5d5%3A0x5d5d5d5d5d5d5d5d!2sVilla%20Carafa!5e0!3m2!1sit!2sit!4v1610000000000!5m2!1sit!2sit" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
 
             <div class="floral-divider"><span>❀</span></div>
         </section>
@@ -615,10 +675,8 @@
 
             if ('vibrate' in navigator) navigator.vibrate(40);
 
-            // Ritardo brevissimo per far recepire il click, poi apre
             setTimeout(() => gateContainer.classList.add('open'), 100);
 
-            // Sblocca lo scroll dopo l'animazione (4s)
             setTimeout(() => {
                 gateContainer.style.display = 'none';
                 body.classList.remove('locked');
@@ -629,7 +687,7 @@
             if (body.classList.contains('locked')) e.preventDefault();
         }, { passive: false });
 
-        /* ===== DATA & COUNTDOWN (02 GIUGNO 2027) ===== */
+        /* ===== DATA & COUNTDOWN ===== */
         const WEDDING_DATE = new Date('2027-06-02T11:00:00');
 
         function updateCountdown() {
@@ -757,6 +815,8 @@
                     } else {
                         ctx.clearRect(0, 0, w, h);
                         revealed = true;
+                        // Una volta rivelato, il canvas non cattura più i tocchi
+                        canvas.style.pointerEvents = 'none';
                     }
                 }
                 requestAnimationFrame(animate);
@@ -771,12 +831,12 @@
                     if ('vibrate' in navigator) navigator.vibrate(15);
                     setTimeout(startAutoReveal, 300);
                 }
-                e.preventDefault();
+                // NON usiamo e.preventDefault() per non bloccare lo scroll
             }
             function move(e) {
                 if (!isDrawing || revealed) return;
                 scratch(getPos(e));
-                e.preventDefault();
+                // NON usiamo e.preventDefault() per non bloccare lo scroll
             }
             function end() { isDrawing = false; }
 
@@ -784,8 +844,8 @@
             canvas.addEventListener('mousemove', move);
             window.addEventListener('mouseup', end);
 
-            canvas.addEventListener('touchstart', start, { passive: false });
-            canvas.addEventListener('touchmove', move, { passive: false });
+            canvas.addEventListener('touchstart', start, { passive: true });
+            canvas.addEventListener('touchmove', move, { passive: true });
             canvas.addEventListener('touchend', end);
 
             let resizeTimer;
